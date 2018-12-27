@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/manasseh/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -109,5 +109,4 @@ export ANDROID_HOME=/opt/android
 
 # Java Downgrade for SDK Manager to Work
 export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
-alias rn-debugger="'/home/manasseh/Downloads/rn-debugger/React Native Debugger'"  
 
