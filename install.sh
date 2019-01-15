@@ -1,7 +1,8 @@
 # install Script
 # TODO add configurations from parameters
+# TODO add NERDFonts config
 
-sudo apt install -y  vim zsh tmux 
+sudo apt install -y  vim zsh tmux fonts-powerline
 
 # Setup Vim
 # copy Vim 
