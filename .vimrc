@@ -37,11 +37,13 @@ Plugin 'mattn/emmet-vim'
 Plugin 'dracula/vim'
 Plugin 'kaicataldo/material.vim'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'luochen1990/rainbow'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
-"filetype plugin on
+filetype plugin on
 "
 " Brief help
 " :PluginList       - lists configured plugins
@@ -79,9 +81,18 @@ let g:user_emmet_settings = {
     \  },
   \}
 
+" Ale Config
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint'],
+\}
+" Set this variable to 1 to fix files when you save them.
+let g:ale_fix_on_save = 1
+" Enable completion where available.
+let g:ale_completion_enabled = 1
+
 " Editor Configuration
 set nu
-filetype plugin indent on
 " show existing tab with 4 spaces width
 set tabstop=2
 " when indenting with '>', use 4 spaces width
