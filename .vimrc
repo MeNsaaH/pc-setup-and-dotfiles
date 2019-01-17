@@ -25,6 +25,7 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 Plugin 'mhartington/oceanic-next'
+Plugin 'w0rp/ale'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdtree'
@@ -34,6 +35,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'mattn/emmet-vim'
+Plugin 'prettier/vim-prettier',
 Plugin 'dracula/vim'
 Plugin 'kaicataldo/material.vim'
 Plugin 'Valloric/YouCompleteMe'
@@ -84,7 +86,7 @@ let g:user_emmet_settings = {
 " Ale Config
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['eslint'],
+\   'javascript': ['prettier', 'eslint'],
 \}
 " Set this variable to 1 to fix files when you save them.
 let g:ale_fix_on_save = 1
