@@ -39,8 +39,13 @@ Plugin 'prettier/vim-prettier',
 Plugin 'dracula/vim'
 Plugin 'kaicataldo/material.vim'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/nerdcommenter'
+"Plugin 'scrooloose/nerdcommenter'
 Plugin 'luochen1990/rainbow'
+Plugin 'tpope/vim-surround'
+Plugin 'file:///home/manasseh/Codes/Personal/nerdcommenters'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'JamshedVesuna/vim-markdown-preview'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -68,7 +73,7 @@ let g:oceanic_next_terminal_bold = 1
 let g:oceanic_next_terminal_italic = 1
 
 set background=dark
-colorscheme material 
+colorscheme material
 let g:material_theme_style = 'dark'
 let g:material_terminal_italics = 1
 let g:airline_theme = 'material'
@@ -83,15 +88,12 @@ let g:user_emmet_settings = {
     \  },
   \}
 
-" Ale Config
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['prettier', 'eslint'],
-\}
+"" Ale Config
+"let g:ale_fixers = {
+"\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+"\}
 " Set this variable to 1 to fix files when you save them.
 let g:ale_fix_on_save = 1
-" Enable completion where available.
-let g:ale_completion_enabled = 1
 
 " Editor Configuration
 set nu
@@ -101,11 +103,8 @@ set tabstop=2
 set shiftwidth=2
 " On pressing tab, insert 4 spaces
 set expandtab
+set omnifunc=syntaxcomplete#Complete
 
-" Python Config
-autocmd FileType python set sw=4
-autocmd FileType python set ts=4
-autocmd FileType python set sts=4
 
 " You Complete Me config
 let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
@@ -114,3 +113,5 @@ let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language
 let g:ycm_complete_in_comments = 1 " Completion in comments
 let g:ycm_complete_in_strings = 1 " Completion in string
 
+" Vim Markdown Preview Config
+let vim_markdown_preview_github=1
