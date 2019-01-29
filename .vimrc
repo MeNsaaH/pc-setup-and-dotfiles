@@ -46,6 +46,7 @@ Plugin 'file:///home/manasseh/Codes/Personal/nerdcommenters'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'JamshedVesuna/vim-markdown-preview'
+Plugin 'altercation/vim-colors-solarized'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -69,14 +70,17 @@ if (has("termguicolors"))
 endif
 
 syntax on
-let g:oceanic_next_terminal_bold = 1
-let g:oceanic_next_terminal_italic = 1
-
+syntax enable
 set background=dark
-colorscheme material
-let g:material_theme_style = 'dark'
-let g:material_terminal_italics = 1
-let g:airline_theme = 'material'
+colorscheme solarized
+let g:solarized_termcolors=256
+"let g:oceanic_next_terminal_bold = 1
+"let g:oceanic_next_terminal_italic = 1
+
+"colorscheme material
+"let g:material_theme_style = 'dark'
+"let g:material_terminal_italics = 1
+"let g:airline_theme = 'material'
 
 " NERDTree Config
 set encoding=UTF-8
