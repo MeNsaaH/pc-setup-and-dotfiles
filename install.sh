@@ -1,26 +1,48 @@
+#!/bin/bash
 # install Script
 # TODO add configurations from parameters
 # TODO add NERDFonts config
 
 echo "Installing Dependencies"
 
-sudo apt install -y  vim zsh tmux fonts-powerline xdotool
+sudo apt install -y   tmux fonts-powerline xdotool
 sudo pip3 install grip
 
 echo "Setting Up Your Environment"
-# Setup Vim
-# copy Vim 
-cp .vimrc ~/.vimrc
-# Install vim Plugins
-vim +PluginInstall +qall
 
-# Setup Zsh
-cp .zshrc ~/.zshrc
+install_vim() {
+  echo "Setting Up Your Vim"
+  # copy Vim
+  sudo apt install -y vim
+  cp .vimrc ~/.vimrc
+  # Install vim Plugins
+  vim +PluginInstall +qall
+  pip install grip
+}
 
-# setup tmux
-cp .bashrc ~/.bashrc
+install_zsh() {
+  echo "Setting up zsh"
+  # Setup Zsh
+  apt install -y zsh
+  cp .zshrc ~/.zshrc
+}
 
-# setup tmux
-cp .tmux.conf ~/.tmux.conf
+install_tmux(){
+  # setup tmux
+  echo "Setting up tmux"
+  apt install -y tmux
+  cp .tmux.conf ~/.tmux.conf
+}
+
+setup_bash(){
+  echo "Setting up bash"
+  cp .bashrc ~/.bashrc
+}
+
+setup_utilities(){
+  echo "Installing a few utilities, fonts"
+  apt install -y fonts-powerline xdotool
+}
+
 
 echo "Installation Complete"

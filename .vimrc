@@ -83,6 +83,7 @@ let g:solarized_termcolors=256
 "let g:airline_theme = 'material'
 
 " NERDTree Config
+let g:NERDTreeWinPos = "right"
 set encoding=UTF-8
 autocmd vimenter * NERDTree
 let g:user_emmet_leader_key='<Tab>'
@@ -93,9 +94,10 @@ let g:user_emmet_settings = {
   \}
 
 "" Ale Config
-"let g:ale_fixers = {
-"\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-"\}
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\}
+
 " Set this variable to 1 to fix files when you save them.
 let g:ale_fix_on_save = 1
 
