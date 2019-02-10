@@ -64,6 +64,7 @@ filetype plugin on
 " for vim 8
 
 
+set encoding=UTF-8
 set t_Co=256
 if (has("termguicolors"))
   set termguicolors
@@ -83,9 +84,12 @@ let g:solarized_termcolors=256
 "let g:airline_theme = 'material'
 
 " NERDTree Config
-let g:NERDTreeWinPos = "right"
-set encoding=UTF-8
+let g:NERDTreeWinPos = "left"
 autocmd vimenter * NERDTree
+let g:nerdtree_tabs_open_on_console_startup=1
+map <Leader><Tab> <plug>NERDTreeTabsToggle<CR>
+
+" vim emmet config
 let g:user_emmet_leader_key='<Tab>'
 let g:user_emmet_settings = {
   \  'javascript.jsx' : {

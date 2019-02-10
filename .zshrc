@@ -1,8 +1,9 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+export TERM="xterm-256color"
 # Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+export ZSH="/home/manasseh/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -17,7 +18,7 @@ ZSH_THEME="steeef"
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
@@ -100,12 +101,12 @@ source $ZSH/oh-my-zsh.sh
 # virtualenvwrapper config
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
-VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 source /usr/local/bin/virtualenvwrapper.sh
-export TERM="xterm-256color"
+export GPG_TTY=$(tty)
+
+alias rn-debugger="'/home/manasseh/Downloads/rn-debugger/React Native Debugger'"
 
 # Android Config
 export ANDROID_HOME=/opt/android
-
-# Java Downgrade for SDK Manager to Work
-export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
+export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions'
