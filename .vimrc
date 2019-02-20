@@ -39,14 +39,14 @@ Plugin 'prettier/vim-prettier',
 Plugin 'dracula/vim'
 Plugin 'kaicataldo/material.vim'
 Plugin 'Valloric/YouCompleteMe'
-"Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'luochen1990/rainbow'
 Plugin 'tpope/vim-surround'
-Plugin 'file:///home/manasseh/Codes/Personal/nerdcommenters'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'haya14busa/incsearch.vim'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -70,6 +70,7 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
+set hlsearch
 syntax on
 syntax enable
 set background=dark
@@ -89,6 +90,11 @@ autocmd vimenter * NERDTree
 let g:nerdtree_tabs_open_on_console_startup=1
 map <Leader><Tab> <plug>NERDTreeTabsToggle<CR>
 
+" IncSearch Config
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
 " vim emmet config
 let g:user_emmet_leader_key='<Tab>'
 let g:user_emmet_settings = {
@@ -101,6 +107,7 @@ let g:user_emmet_settings = {
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \}
+Plugin 'file:///home/manasseh/Codes/Personal/nerdcommenters'
 
 " Set this variable to 1 to fix files when you save them.
 let g:ale_fix_on_save = 1
