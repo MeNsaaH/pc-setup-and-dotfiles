@@ -1,1 +1,0 @@
-agnosterzak.zsh-theme

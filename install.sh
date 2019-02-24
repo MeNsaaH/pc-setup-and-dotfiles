@@ -1,5 +1,6 @@
 #!/bin/bash
 # install Script
+# NOTE This has not being tested yet
 # TODO add configurations from parameters
 # TODO add NERDFonts config
 
