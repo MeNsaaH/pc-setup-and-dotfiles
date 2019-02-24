@@ -47,6 +47,7 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'haya14busa/incsearch.vim'
+Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -90,6 +91,16 @@ autocmd vimenter * NERDTree
 let g:nerdtree_tabs_open_on_console_startup=1
 map <Leader><Tab> <plug>NERDTreeTabsToggle<CR>
 
+" NERD commenter Config
+let g:NERDDefaultAlign = 'start'
+
+" Vim-nerdtree-syntax-highlight config
+let g:NERDTreeFileExtensionHighlightFullName = 1
+let g:NERDTreeExactMatchHighlightFullName = 1
+let g:NERDTreePatternMatchHighlightFullName = 1
+let g:NERDTreeHighlightFolders = 1 " enables folder icon highlighting using exact match
+let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
+
 " IncSearch Config
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
@@ -107,7 +118,6 @@ let g:user_emmet_settings = {
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \}
-Plugin 'file:///home/manasseh/Codes/Personal/nerdcommenters'
 
 " Set this variable to 1 to fix files when you save them.
 let g:ale_fix_on_save = 1
@@ -132,3 +142,6 @@ let g:ycm_complete_in_strings = 1 " Completion in string
 
 " Vim Markdown Preview Config
 let vim_markdown_preview_github=1
+
+" Allow one by one replacement of highlighted words
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
