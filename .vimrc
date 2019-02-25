@@ -145,3 +145,20 @@ let vim_markdown_preview_github=1
 
 " Allow one by one replacement of highlighted words
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
+" Fluid Edit my .vimrc
+nnoremap <leader>ev :split $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" Some of my easy mistakes mapped as abbrev
+iabbrev unistal uninstall
+
+" Quotation
+nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
+
+" Remap esc
+inoremap jk <esc>
+inoremap <esc> <nop>
+
+" Capitalize word
+nnoremap <c-u> <esc>viwU
