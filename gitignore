@@ -1,3 +1,6 @@
 # VIM Swap files
 *.swp
 *.swo
+
+# VSCODE configs
+vscode

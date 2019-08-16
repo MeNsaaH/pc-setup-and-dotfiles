@@ -152,9 +152,11 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " Some of my easy mistakes mapped as abbrev
 iabbrev unistal uninstall
+iabbrev isntance instance
 
 " Quotation
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
+vnoremap <leader>" di""<esc>hpgv
 
 " Remap esc
 inoremap jk <esc>
@@ -162,3 +164,25 @@ inoremap <esc> <nop>
 
 " Capitalize word
 nnoremap <c-u> <esc>viwU
+
+
+" Use space to move
+nnoremap <space><space> <c-w>
+
+" Maintain block after indenting
+"vnoremap < <gv
+"vnoremap > >gv
+
+" ALE to run only on save
+"let g:ale_lint_on_text_changed = 'never'
+"let g:ale_lint_on_insert_leave = 0
+"" linters to run on opening a file
+"let g:ale_lint_on_enter = 1
+"
+let g:ale_fix_on_save = 0
+
+" Copy and paste from system clipboard
+noremap <Leader>y "*y
+noremap <Leader>p "*p
+noremap <Leader>Y "+y
+noremap <Leader>P "+p
