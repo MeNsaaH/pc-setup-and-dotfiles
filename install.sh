@@ -54,6 +54,14 @@ install_deps() {
   fi
 }
 
+run_playbook() {
+  local status = "$(ansible-playbook $1 -vvv)"
+  if [[ $status != 0 ]]
+  then
+    fail "Could not configure $1"
+  fi
+}
+
 setup_vim() {
   info "Setting Up Your Vim"
   # TODO check if vim is installed
@@ -63,6 +71,7 @@ setup_vim() {
   [t]erminal, [g]ui, [a]ll?"
   read -n 1 action
 
+  # Pass this extra vars to Playbook
   case "$action" in
     T|t )
       t="vim";;
@@ -74,8 +83,7 @@ setup_vim() {
       ;;
   esac
 
-  install_deps $t
-  install_dotfiles vim
+  run_playbook plays/playbooks/setup_vim.yml
   # Install vim Plugins
   vim +PluginInstall +qall
 } 
@@ -83,8 +91,6 @@ setup_vim() {
 setup_zsh() {
   info "Setting up zsh"
   # Setup Zsh
-  install_deps zsh
-  install_dotfiles zsh
   # Set ZSH as default shell
   sudo chsh $(which zsh)
   #TODO install Zsh plugins and theme from github

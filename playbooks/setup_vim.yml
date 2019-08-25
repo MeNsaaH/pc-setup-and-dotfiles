@@ -1,0 +1,30 @@
+- hosts: localhost
+  vars_files:
+    - "./vars.yml"
+  gather_facts: true
+  become: yes
+
+  tasks:
+    - name: Install "vim" Package
+      apt:
+        name: vim
+        update_cache: yes
+
+    - name: Copy vimrc to user home directory
+      copy:
+        src: vim/vimrc
+        dest: ~/.vimrc
+
+    - name: Copy ftplugin to user vim directory
+      copy:
+        src: vim/ftplugin
+        dest: ~/.vim/
+
+    - name: Install Vundle Plugin Manager
+      git:
+        repo: https://github.com/VundleVim/Vundle.vim.git 
+        dest: ~/.vim/bundle/Vundle.vim
+
+    - name: Install Vim Plugins
+      # Calling Vim Directory tries to call the vim folder somehow
+      script: "$(which vim)" +PluginInstall +qall
