@@ -1,12 +1,8 @@
 # MeNsaaH's dotfiles
-A collection of my dotfiles. 
+MeNsaaH's dotfiles as ansible roles 
 
 ![Vim](./screenshots/vim.png)
 ![Zsh](./screenshots/zsh.png)
-## Installation
 
-** Experimental **
-```bash
-  > git clone https://github.com:MeNsaaH/dotfiles.git
-  > ./install.sh
-```  
+## Installation
+The installation setup is still in progress
