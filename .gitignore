@@ -1,0 +1,8 @@
+# VIM Swap files
+*.swp
+*.swo
+*:p
+
+
+test.py
+test-terraform/
