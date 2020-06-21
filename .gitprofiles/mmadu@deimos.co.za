@@ -1,0 +1,10 @@
+[user]
+  email = mmadu@deimos.co.za
+  name = Mmadu Manasseh
+
+[core]
+  sshcommand = ssh -i /home/manasseh/.ssh/deimos_git
+
+[alias]
+  taint = ! echo  >> ~/.gitignore
+
