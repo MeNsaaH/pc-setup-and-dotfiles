@@ -9,7 +9,7 @@
 
 [core]
   editor = vim
-  excludesfile = /home/manasseh/.gitignore
+  excludesfile = /home/mensaah/.gitignore
 
 [alias]
   rank = shortlog -sn --no-merges
@@ -57,6 +57,6 @@
 [credential]
   helper = cache --timeout=36000000
 
-[includeIf "gitdir:/home/manasseh/Codes/github/"]
-  path = /home/manasseh/.gitprofiles/mmadumanasseh@gmail.com
+[includeIf "gitdir:/home/mensaah/Codes/github/"]
+  path = /home/mensaah/.gitprofiles/mmadumanasseh@gmail.com
 

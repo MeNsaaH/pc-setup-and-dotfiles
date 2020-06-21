@@ -1,0 +1,74 @@
+#! /bin/bash
+
+info() {
+  echo "$1"
+}
+
+required_packages(){
+  sudo apt install -y python3-pip curl
+}
+
+
+########################
+# VIM
+########################
+install_vim() {
+  info "Setting up VIM..."
+  if [ -f "$HOME/.vimrc" ]; then
+    sudo apt install -y vim
+    
+    # Install Vundle
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+    # Install vundle packages
+    vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
+  fi
+}
+
+
+#########################
+# Git
+########################
+setup_git() {
+  info "Setting up Git..."
+  sudo apt install -y git
+}
+
+
+#########################
+# ZSH
+########################
+setup_zsh() {
+  info "setting up ZSH"
+  sudo apt install -y zsh 
+  if [ -f "$HOME/.zshrc" ]; then
+    mv "$HOME/.zshrc" "$HOME/.zshrc.bak" 
+  fi
+  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+  if [ -f "$HOME/.zshrc.bak" ]; then
+    mv "$HOME/.zshrc.bak" "$HOME/.zshrc" 
+  fi
+
+  # PowerLevel10k
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
+
+  # ZSH Syntax highlighter
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+  # ZSH Suggestions
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+}
+
+
+#########################
+# TMUX
+########################
+setup_tmux() {
+  info "Setting up TMUX..."
+  sudo apt install -y tmux
+}
+
+setup_git
+setup_vim
+setup_zsh
+setup_tmux

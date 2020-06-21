@@ -7,7 +7,7 @@ fi
 
 export TERM="xterm-256color"
 # Path to your oh-my-zsh installation.
-export ZSH="/home/manasseh/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -118,11 +118,11 @@ export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 export VIRTUALENV_PYTHON=/usr/bin/python3
-source /usr/local/bin/virtualenvwrapper.sh
+#source /usr/local/bin/virtualenvwrapper.sh
 
 export GPG_TTY=$(tty)
 export ANDROID_HOME=/opt/android
-export GOPATH=/home/manasseh/Codes/go
+export GOPATH=$HOME/Codes/go
 export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -131,11 +131,11 @@ export NVM_DIR="$HOME/.nvm"
 # PATHS
 # If you come from bash you might have to change your $PATH.
 export PATH=/snap/bin:$HOME/bin:/usr/local/bin:$PATH
-export PATH="$PATH:/home/manasseh/Codes/go/bin:$HOME/.poetry/bin"
+export PATH="$PATH:$HOME/Codes/go/bin:$HOME/.poetry/bin"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH="$PATH:/opt/mssql-tools/bin"
 # Helm
-export PATH=/home/manasseh/Downloads/linux-amd64:$PATH
+export PATH=$HOME/Downloads/linux-amd64:$PATH
 
 fpath+=~/.zfunc
 #alias alert=notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "Task finished" "$(history|tail -n1|sed -e 's/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//')"
