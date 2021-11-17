@@ -25,7 +25,7 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Install L9 and avoid a Naming conflict if you've already installed a
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
-Plugin 'mhartington/oceanic-next'
+"Plugin 'ycm-core/YouCompleteMe'
 Plugin 'w0rp/ale'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -38,7 +38,6 @@ Plugin 'ryanoasis/vim-devicons'
 Plugin 'mattn/emmet-vim'
 Plugin 'prettier/vim-prettier',
 Plugin 'dracula/vim'
-Plugin 'kaicataldo/material.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'luochen1990/rainbow'
 Plugin 'tpope/vim-surround'
@@ -49,11 +48,29 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'rust-lang/rust.vim'
-Plugin 'fatih/vim-go'
 Plugin 'kristijanhusak/vim-carbon-now-sh'
 Plugin 'Glench/Vim-Jinja2-Syntax'
 Plugin 'towolf/vim-helm'
 Plugin 'hashivim/vim-terraform'
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plugin 'junegunn/fzf.vim'
+Plugin 'fatih/vim-go'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'cespare/vim-toml'
+Plugin 'rodjek/vim-puppet'
+Plugin 'davewongillies/vim-eyaml'
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -88,10 +105,6 @@ let g:solarized_termcolors=256
 "let g:oceanic_next_terminal_bold = 1
 "let g:oceanic_next_terminal_italic = 1
 
-"colorscheme material
-"let g:material_theme_style = 'dark'
-"let g:material_terminal_italics = 1
-"let g:airline_theme = 'material'
 
 " NERDTree Config
 let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__[[dir]]']
@@ -129,8 +142,6 @@ let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \}
 
-" Set this variable to 1 to fix files when you save them.
-let g:ale_fix_on_save = 0
 
 " Editor Configuration
 set nu
@@ -157,6 +168,7 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 " Some of my easy mistakes mapped as abbrev
 iabbrev unistal uninstall
 iabbrev isntance instance
+iabbrev isntances instances
 
 " Quotation
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
@@ -185,19 +197,32 @@ nnoremap <space><space> <c-w>
 "let g:ale_lint_on_text_changed = 'never'
 "let g:ale_lint_on_insert_leave = 0
 "" linters to run on opening a file
-"let g:ale_lint_on_enter = 1
-"
-"let g:ale_fix_on_save = 0
+let g:ale_lint_on_enter = 1
+let g:ale_fix_on_save = 1
+"let b:ale_fixers = {'javascript': ['eslint']}
 
 noremap <Leader>y "*y
 noremap <Leader>p "*p
 noremap <Leader>Y "+y
 noremap <Leader>P "+p
+vnoremap <C-c> "*y
 
 " Terraform configurations
 let g:terraform_align=1
 let g:terraform_fold_sections=1
 let g:terraform_fmt_on_save=1
+let g:hcl_align=1
 
 " Disable Folding
 set nofoldenable
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+:vnoremap <leader>b y:let @"=system('base64 --decode', @")<cr>gvP
+:vnoremap <leader>B y:let @"=system('base64 -w 0', @")<cr>gvP

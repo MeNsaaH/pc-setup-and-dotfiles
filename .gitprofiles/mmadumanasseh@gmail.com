@@ -1,10 +1,9 @@
 [user]
+  signingkey = 533C4FDA78751FE1
   email = mmadumanasseh@gmail.com
-  name = Mmadu Manasseh
 
-[core]
-  excludesfile = /home/manasseh/.gitignore
+[commit]
+  gpgsign = true
 
-[includeIf "gitdir:/home/manasseh/Codes/github/"]
-  path = /home/manasseh/.gitprofiles/mmadumanasseh@gmail.com
-
+[gpg]
+  program = gpg

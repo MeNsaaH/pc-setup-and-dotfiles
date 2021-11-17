@@ -34,5 +34,6 @@ Todo
 - [ ] go
 - [ ] Python and python dev tools (install Poetry, pipenv, virtualenvwrapper)
 - [ ] Fonts
+- [ ] Gogh for theme selection
 - [ ] Add conditional installation from conf variable (INSTALL_VIM=1, INSTALL_TMUX=0)
 

@@ -107,41 +107,36 @@ export EDITOR='vim'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 # virtualenvwrapper config
 
-alias ls="ls -lh"
-alias open="xdg-open"
-alias k="kubectl"
-alias tf="terraform"
-alias krew="kubectl krew"
-
 
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 export VIRTUALENV_PYTHON=/usr/bin/python3
-#source /usr/local/bin/virtualenvwrapper.sh
+source $HOME/.local/bin/virtualenvwrapper.sh
 
 export GPG_TTY=$(tty)
 export ANDROID_HOME=/opt/android
-export GOPATH=$HOME/Codes/go
 export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion                                                
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # PATHS
 # If you come from bash you might have to change your $PATH.
-export PATH=/snap/bin:$HOME/bin:/usr/local/bin:$PATH
+export PATH=/snap/bin:$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export PATH="$PATH:$HOME/Codes/go/bin:$HOME/.poetry/bin"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-export PATH="$PATH:/opt/mssql-tools/bin"
+export PATH="$(yarn global bin):$PATH"
 # Helm
 export PATH=$HOME/Downloads/linux-amd64:$PATH
+export PATH=$HOME/.linkerd2/bin:$PATH
+export KUBECTL_EXTERNAL_DIFF="colordiff -N -u"
 
 fpath+=~/.zfunc
 #alias alert=notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "Task finished" "$(history|tail -n1|sed -e 's/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//')"
 
-function create() { 
-  mkdir -p "$(dirname "$1")" && touch "$1" ; 
+function create() {
+  mkdir -p "$(dirname "$1")" && touch "$1" ;
 }
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -156,6 +151,25 @@ function clean_zsh_history(){
 
 function pyclean {
 #  find -iname "*.py[co]"|xargs rm -rf
-  find . -type f -name '*.pyc' -delete && find . -type d -name '__pycache__' -delete
+  find . -type f -name '*.pyc' -delete && find . -type d -name '__pycache__' -delete -print
 }
 
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/mensaah/.sdkman"
+[[ -s "/home/mensaah/.sdkman/bin/sdkman-init.sh" ]] && source "/home/mensaah/.sdkman/bin/sdkman-init.sh"
+
+# added by travis gem
+[ ! -s /home/mensaah/.travis/travis.sh ] || source /home/mensaah/.travis/travis.sh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+[[ -s "/home/mensaah/.gvm/scripts/gvm" ]] && source "/home/mensaah/.gvm/scripts/gvm"
+export GOPATH=$HOME/Codes/go
+
+if [ -f ~/.aliases ]; then
+    . ~/.aliases
+fi
+
+export TF_PLUGIN_CACHE_DIR=$HOME/.terraform.d/cache
+export XDG_CONFIG_HOME=$HOME/.config

@@ -120,9 +120,20 @@ fi
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
 VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-source /usr/local/bin/virtualenvwrapper.sh
+# source /usr/local/bin/virtualenvwrapper.sh
 
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/mensaah/.sdkman"
+[[ -s "/home/mensaah/.sdkman/bin/sdkman-init.sh" ]] && source "/home/mensaah/.sdkman/bin/sdkman-init.sh"
+
+# added by travis gem
+[ ! -s /home/mensaah/.travis/travis.sh ] || source /home/mensaah/.travis/travis.sh
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+[[ -s "/home/mensaah/.gvm/scripts/gvm" ]] && source "/home/mensaah/.gvm/scripts/gvm"
