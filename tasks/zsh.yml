@@ -1,0 +1,23 @@
+- name: Ensure installation script is downloaded.
+  get_url:
+    url: https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    dest: /tmp/ohmyzsh-installer.sh
+    mode: 0755
+
+- name: Ensure ohmyzsh is installed.
+  shell: /tmp/ohmyzsh-installer.sh
+  args:
+    creates: "{{ ansible_env.HOME }}/.oh-my-zsh/oh-my-zsh.sh"
+
+- name: Ensure powerlevel10k repository is cloned locally and installed.
+  git:
+    repo: "https://github.com/romkatv/powerlevel10k.git"
+    dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/themes/powerlevel10k"
+    accept_hostkey: "true"
+    depth: 1
+
+- name: Download {{ item.name }} zsh Plugin
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/plugins/{{ item.name }}"
+  loop: "{{ zsh_plugins }}"

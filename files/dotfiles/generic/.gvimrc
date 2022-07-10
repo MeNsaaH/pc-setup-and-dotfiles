@@ -1,0 +1,1 @@
+set guifont=Monaco\ Nerd\ Font:h12

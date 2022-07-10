@@ -4,18 +4,18 @@ downloads: ~/.ansible-downloads/
 # Set to 'true' to configure the Dock via dockutil.
 configure_dock: true
 dockitems_remove:
- - Launchpad
- - TV
- - FaceTime
- - Podcasts
- - 'App Store'
+  - Launchpad
+  - TV
+  - FaceTime
+  - Podcasts
+  - "App Store"
 dockitems_persist:
- - name: "Authy"
-   path: "/Applications/Authy Desktop.app/"
-   pos: 10
- - name: "Google Chrome"
-   path: "/Applications/Google Chrome.app/"
-   pos: 11
+  - name: "Authy Desktop"
+    path: "/Applications/Authy Desktop.app/"
+    pos: 10
+  - name: "Google Chrome"
+    path: "/Applications/Google Chrome.app/"
+    pos: 11
 
 homebrew_installed_packages:
   - aquasecurity/trivy/trivy
@@ -35,28 +35,32 @@ homebrew_installed_packages:
   - hashicorp/tap/packer
   - go
   - goenv
+  - gnu-tar
   - gnupg
   - htop
   - kubernetes-cli
   - kubeseal
   - kustomize
   - mercurial
-  - openjdk
   - nvm
+  - openjdk
   - podman
+  - pre-commit
   - pyenv
   - ruby
+  - shfmt
   - sops
   - telnet
-  - terraform
+  - name: terraform
+    state: absent
   - terraform-docs
-  - terragrunt
+  - name: terragrunt
+    install_options: ignore-dependencies # terraform is managed by tfenv
   - tfenv
   - tflint
   - tmux
   - tree
   - ytt
-
 
 homebrew_taps:
   - homebrew/core
@@ -69,12 +73,12 @@ homebrew_cask_apps:
   - 1password
   - authy
   - docker
-  - font-hack-nerd-font
   - iterm2
   - google-chrome
   - joplin
   - lastpass
   - lens
+  - macvim
   - miro
   - openvpn-connect
   - pritunl
@@ -107,10 +111,8 @@ npm_packages: []
 # - name: webpack
 #   state: present # present/absent/latest, default: present
 #   version: "^2.6" # default: N/A
-pip_packages: []
-# - name: mkdocs
-#   state: present # present/absent/latest, default: present
-#   version: "0.16.3" # default: N/A
+pip_packages:
+  - virtualenvwrapper
 
 # Glob pattern to ansible task files to run after all other tasks are finished.
 post_provision_tasks: []
@@ -121,23 +123,42 @@ iterm2_shell_integration_script: .iterm2_shell_integration.zsh
 # base url to download from
 iterm2_shell_integration_download_url: https://iterm2.com/shell_integration/zsh
 
-
 # Kubectl Plugins
 kubectl_plugins:
-- access-matrix 
-- ctx
-- df-pv
-- doctor
-- get-all
-- iexec
-- ingress-nginx
-- node-shell
-- ns
-- popeye
-- prompt
-- rbac-lookup
-- rolesum
-- tail
-- tree
-- who-can
-- whoami
+  - access-matrix
+  - ctx
+  - df-pv
+  - doctor
+  - get-all
+  - iexec
+  - ingress-nginx
+  - node-shell
+  - ns
+  - popeye
+  - prompt
+  - rbac-lookup
+  - rolesum
+  - tail
+  - tree
+  - who-can
+  - whoami
+
+fonts:
+  # - name: Monaco # Font Name
+  #   repo: https://github.com/Karmenzind/monaco-nerd-fonts.git # Repo where font can be gotten from
+  #   dirs: ["fonts"] # directories within repo where fonts are
+  - name: Monaco
+    repo: https://github.com/Karmenzind/monaco-nerd-fonts.git
+    dirs: ["fonts"]
+  - name: FiraCode
+    url: https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip
+    dirs: ["ttf"]
+# - name: Meslo
+#   repo: https://github.com/ryanoasis/nerd-fonts.git
+#   dirs: ["patched-fonts/Meslo/M", "patched-fonts/Meslo/L"]
+
+zsh_plugins:
+  - name: zsh-autosuggestions
+    repo: https://github.com/zsh-users/zsh-autosuggestions.git
+  - name: zsh-syntax-highlighting
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git

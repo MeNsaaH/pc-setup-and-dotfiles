@@ -156,15 +156,15 @@ function pyclean {
 
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/mensaah/.sdkman"
-[[ -s "/home/mensaah/.sdkman/bin/sdkman-init.sh" ]] && source "/home/mensaah/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # added by travis gem
-[ ! -s /home/mensaah/.travis/travis.sh ] || source /home/mensaah/.travis/travis.sh
+[ ! -s $HOME/.travis/travis.sh ] || source $HOME/.travis/travis.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-[[ -s "/home/mensaah/.gvm/scripts/gvm" ]] && source "/home/mensaah/.gvm/scripts/gvm"
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 export GOPATH=$HOME/Codes/go
 
 if [ -f ~/.aliases ]; then

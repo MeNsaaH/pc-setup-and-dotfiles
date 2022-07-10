@@ -93,7 +93,7 @@ set hlsearch
 syntax on
 syntax enable
 set background=dark
-colorscheme molokai
+silent! colorscheme molokai
 "let g:oceanic_next_terminal_bold = 1
 "let g:oceanic_next_terminal_italic = 1
 

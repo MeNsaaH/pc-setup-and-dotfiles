@@ -3,6 +3,7 @@
 
   vars_files:
     - default-config.yml
+    - vars/{{ ansible_distribution }}.yml
 
   roles:
     - role: elliotweiser.osx-command-line-tools
@@ -11,37 +12,44 @@
     - role: geerlingguy.mac.homebrew
       when:
         - ansible_distribution == "MacOSX"
-      tags: ['homebrew']
+      tags: ["homebrew"]
     - role: geerlingguy.mac.mas
-      when: 
+      when:
         - mas_installed_apps or mas_installed_app_ids
         - ansible_distribution == "MacOSX"
-      tags: ['mas']
+      tags: ["mas"]
     - role: geerlingguy.mac.dock
-      tags: ['dock']
-      when: 
+      tags: ["dock"]
+      when:
         - configure_dock
         - ansible_distribution == "MacOSX"
 
   tasks:
     - import_tasks: tasks/extra-packages.yml
-      tags: ['extra-packages']
+      tags: ["extra-packages"]
 
-    - name: Setup iterm2
+    - name: Fonts installation
+      include_tasks: "tasks/fonts.yml"
+      vars:
+        font: "{{ item }}"
+      loop: "{{ fonts }}"
+      tags: ["fonts"]
+
+    - name: Copy dotfiles
       block:
-        - name: Check if shell integration has been already done
-          stat:
-            path: "{{ ansible_env.HOME }}/{{ iterm2_shell_integration_script }}"
-          register: iterm2_integration_exists
+        - name: Copy all generic dotfiles files
+          copy:
+            src: "{{ playbook_dir }}/files/dotfiles/generic/"
+            dest: "{{ ansible_env.HOME }}/"
+        - name: Copy all os-specific dotfiles files
+          copy:
+            src: "{{ playbook_dir }}/files/dotfiles/{{ ansible_distribution }}/"
+            dest: "{{ ansible_env.HOME }}/"
+      tags: ["dotfiles", "zsh", "vim"]
 
-        - name: Download iTerm2 shell integration script
-          get_url:
-            url: "{{ iterm2_shell_integration_base_url }}/{{ iterm2_shell_integration_script }}"
-            dest: "{{ ansible_env.HOME }}/{{ iterm2_shell_integration_script }}"
-          when: iterm2_integration_exists.stat.exists == False
-      tags: ['iterm']
-      when:
-        - ansible_distribution == "MacOSX"
+    - name: Setup ZSH and ohmyzsh
+      import_tasks: tasks/zsh.yml
+      tags: ["zsh"]
 
     - name: Setup vim plugins
       block:
@@ -55,59 +63,35 @@
           shell: "vim +PluginInstall +qall"
           args:
             executable: /bin/bash
-      tags: ['vim']
+      tags: ["vim"]
 
-    - name: Setup ZSH and ohmyzsh
-      block:
-        - name: Ensure ohmyzsh is installed.
-          shell: "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-          args:
-            creates: "{{ ansible_env.HOME }}/.oh-my-zsh/oh-my-zsh.sh"
-
-        - name: Ensure powerlevel10k repository is cloned locally and installed.
-          git:
-            repo: "https://github.com/romkatv/powerlevel10k.git"
-            dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/themes/powerlevel10k"
-            accept_hostkey: "true"
-            depth: 1
-      tags: ['zsh']
-
-    - name: copy dotfiles
-      block:
-      - name: copy all generic dotfiles files
-        copy:
-          src: "{{ item }}"
-          dest: "{{ ansible_env.HOME }}"
-        with_fileglob: "{{ playbook_dir }}/files/dotfiles/generic/*"
-      - name: copy all os-specific dotfiles files
-        copy:
-          src: "{{ item }}"
-          dest: "{{ ansible_env.HOME }}"
-        with_fileglob: "{{ playbook_dir }}/files/dotfiles/{{ ansible_distribution }}/*"
-
-      tags: ['dotfiles']
-
+    - name: Setup iterm2
+      import_tasks: tasks/terminal.yml
+      when:
+        - ansible_distribution == "MacOSX"
+      tags: ["iterm"]
 
     - name: Setup kubectl and kubernetes components
+      tags: ["kubectl", "k8s"]
       block:
+        - name: Setting krew name
+          set_fact:
+            krew: krew-{{ ansible_system |lower }}_{{ "amd64" if ansible_architecture == "x86_64" else "arm64" if ansible_architecture == "arm64" else "" }}
+        - name: Download and Unarchive krew
+          unarchive:
+            src: https://github.com/kubernetes-sigs/krew/releases/latest/download/{{ krew }}.tar.gz
+            dest: /tmp/
+            remote_src: yes
+            creates: /tmp/{{ krew }}
         - name: Ensure krew is installed.
           shell: |
-            (
-              set -x; cd "$(mktemp -d)" &&
-              OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
-              ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
-              KREW="krew-${OS}_${ARCH}" &&
-              curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
-              tar zxvf "${KREW}.tar.gz" &&
-              ./"${KREW}" install krew
-            )
-          tags: ['k8s']
+            /tmp/{{ krew }} install krew
           args:
             executable: /bin/bash
             creates: "{{ ansible_env.HOME }}/.krew/bin/kubectl-krew"
-            
+
         - name: install kubectl plugins
-          shell: "krew install {{ item }}"
+          shell: "/tmp/{{ krew }} install {{ item }}"
           args:
             creates: "{{ ansible_env.HOME }}/.krew/bin/kubectl-{{ item | replace ('-', '_') }}"
           loop: "{{ kubectl_plugins }}"

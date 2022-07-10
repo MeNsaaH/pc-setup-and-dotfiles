@@ -1,0 +1,33 @@
+---
+- name: Create /tmp/{{ item.name }} directory if not exist
+  file:
+    path: "/tmp/{{ item.name }}"
+    state: directory
+  tags: ["fonts"]
+
+- name: Download {{ item.name }} Fonts (git repo)
+  git:
+    repo: "{{ item.repo }}"
+    dest: "/tmp/{{ item.name }}"
+    accept_hostkey: "true"
+    depth: 1
+  when: item.repo|default ("") != ""
+  tags: ["fonts"]
+
+- name: Download {{ item.name }} Fonts (archive URL)
+  unarchive:
+    src: "{{ item.url }}"
+    dest: "/tmp/{{ item.name }}"
+    remote_src: yes
+    creates: /tmp/{{ item.name }}/{{ item.dirs }}
+  when: item.url|default ("") != ""
+  tags: ["fonts"]
+
+- name: Install {{ item.name }} Font
+  copy:
+    src: "/tmp/{{ item.name }}/{{ dir }}/"
+    dest: "{{ fonts_dir }}"
+  loop: "{{ item.dirs }}"
+  loop_control:
+    loop_var: dir
+  tags: ["fonts"]

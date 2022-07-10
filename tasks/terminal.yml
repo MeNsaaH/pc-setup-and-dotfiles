@@ -1,0 +1,16 @@
+---
+- name: Check if shell integration has been already done
+  stat:
+    path: "{{ ansible_env.HOME }}/{{ iterm2_shell_integration_script }}"
+  register: iterm2_integration_exists
+
+- name: Download iTerm2 shell integration script
+  get_url:
+    url: "{{ iterm2_shell_integration_download_url }}"
+    dest: "{{ ansible_env.HOME }}/{{ iterm2_shell_integration_script }}"
+  when: iterm2_integration_exists.stat.exists == False
+
+- name: Set Font configuration
+  shell: |
+    /usr/libexec/PlistBuddy -c 'Set :"New Bookmarks":0:"Non Ascii Font" "{{ iterm2_non_ascii_font }}"' ~/Library/Preferences/com.googlecode.iterm2.plist
+    /usr/libexec/PlistBuddy -c 'Set :"New Bookmarks":0:"Normal Font" "{{ iterm2_normal_font }}"' ~/Library/Preferences/com.googlecode.iterm2.plist
