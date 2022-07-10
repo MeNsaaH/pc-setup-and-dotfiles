@@ -1,0 +1,118 @@
+---
+- hosts: all
+
+  vars_files:
+    - default-config.yml
+
+  roles:
+    - role: elliotweiser.osx-command-line-tools
+      when:
+        - ansible_distribution == "MacOSX"
+    - role: geerlingguy.mac.homebrew
+      when:
+        - ansible_distribution == "MacOSX"
+      tags: ['homebrew']
+    - role: geerlingguy.mac.mas
+      when: 
+        - mas_installed_apps or mas_installed_app_ids
+        - ansible_distribution == "MacOSX"
+      tags: ['mas']
+    - role: geerlingguy.mac.dock
+      tags: ['dock']
+      when: 
+        - configure_dock
+        - ansible_distribution == "MacOSX"
+
+  tasks:
+    - import_tasks: tasks/extra-packages.yml
+      tags: ['extra-packages']
+
+    - name: Setup iterm2
+      block:
+        - name: Check if shell integration has been already done
+          stat:
+            path: "{{ ansible_env.HOME }}/{{ iterm2_shell_integration_script }}"
+          register: iterm2_integration_exists
+
+        - name: Download iTerm2 shell integration script
+          get_url:
+            url: "{{ iterm2_shell_integration_base_url }}/{{ iterm2_shell_integration_script }}"
+            dest: "{{ ansible_env.HOME }}/{{ iterm2_shell_integration_script }}"
+          when: iterm2_integration_exists.stat.exists == False
+      tags: ['iterm']
+      when:
+        - ansible_distribution == "MacOSX"
+
+    - name: Setup vim plugins
+      block:
+        - name: Ensure vundle repository is cloned locally and installed.
+          git:
+            repo: "https://github.com/VundleVim/Vundle.vim.git"
+            dest: "{{ ansible_env.HOME }}/.vim/bundle/Vundle.vim"
+            accept_hostkey: "true"
+
+        - name: Install vim plugins
+          shell: "vim +PluginInstall +qall"
+          args:
+            executable: /bin/bash
+      tags: ['vim']
+
+    - name: Setup ZSH and ohmyzsh
+      block:
+        - name: Ensure ohmyzsh is installed.
+          shell: "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+          args:
+            creates: "{{ ansible_env.HOME }}/.oh-my-zsh/oh-my-zsh.sh"
+
+        - name: Ensure powerlevel10k repository is cloned locally and installed.
+          git:
+            repo: "https://github.com/romkatv/powerlevel10k.git"
+            dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/themes/powerlevel10k"
+            accept_hostkey: "true"
+            depth: 1
+      tags: ['zsh']
+
+    - name: copy dotfiles
+      block:
+      - name: copy all generic dotfiles files
+        copy:
+          src: "{{ item }}"
+          dest: "{{ ansible_env.HOME }}"
+        with_fileglob: "{{ playbook_dir }}/files/dotfiles/generic/*"
+      - name: copy all os-specific dotfiles files
+        copy:
+          src: "{{ item }}"
+          dest: "{{ ansible_env.HOME }}"
+        with_fileglob: "{{ playbook_dir }}/files/dotfiles/{{ ansible_distribution }}/*"
+
+      tags: ['dotfiles']
+
+
+    - name: Setup kubectl and kubernetes components
+      block:
+        - name: Ensure krew is installed.
+          shell: |
+            (
+              set -x; cd "$(mktemp -d)" &&
+              OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+              ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+              KREW="krew-${OS}_${ARCH}" &&
+              curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+              tar zxvf "${KREW}.tar.gz" &&
+              ./"${KREW}" install krew
+            )
+          tags: ['k8s']
+          args:
+            executable: /bin/bash
+            creates: "{{ ansible_env.HOME }}/.krew/bin/kubectl-krew"
+            
+        - name: install kubectl plugins
+          shell: "krew install {{ item }}"
+          args:
+            creates: "{{ ansible_env.HOME }}/.krew/bin/kubectl-{{ item | replace ('-', '_') }}"
+          loop: "{{ kubectl_plugins }}"
+
+    - name: ensure fzf completions are installed.
+      shell: $(brew --prefix)/opt/fzf/install
+      args:
+        creates: "{{ ansible_env.HOME }}/.fzf.zsh"

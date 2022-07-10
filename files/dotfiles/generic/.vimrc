@@ -31,7 +31,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
+" Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'ryanoasis/vim-devicons'
@@ -42,9 +42,8 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'luochen1990/rainbow'
 Plugin 'tpope/vim-surround'
 Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
+Plugin 'preservim/vim-markdown'
 Plugin 'JamshedVesuna/vim-markdown-preview'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'rust-lang/rust.vim'
@@ -60,16 +59,10 @@ Plugin 'honza/vim-snippets'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'cespare/vim-toml'
-Plugin 'rodjek/vim-puppet'
 Plugin 'davewongillies/vim-eyaml'
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+Plugin 'rodjek/vim-puppet'
+Plugin 'tomasr/molokai'
+Plugin 'airblade/vim-gitgutter'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -100,11 +93,14 @@ set hlsearch
 syntax on
 syntax enable
 set background=dark
-colorscheme solarized
-let g:solarized_termcolors=256
+colorscheme molokai
 "let g:oceanic_next_terminal_bold = 1
 "let g:oceanic_next_terminal_italic = 1
 
+"colorscheme material
+"let g:material_theme_style = 'dark'
+"let g:material_terminal_italics = 1
+" let g:airline_theme = 'night_owl'
 
 " NERDTree Config
 let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__[[dir]]']
@@ -142,6 +138,8 @@ let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \}
 
+" Set this variable to 1 to fix files when you save them.
+let g:ale_fix_on_save = 0
 
 " Editor Configuration
 set nu
@@ -168,7 +166,6 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 " Some of my easy mistakes mapped as abbrev
 iabbrev unistal uninstall
 iabbrev isntance instance
-iabbrev isntances instances
 
 " Quotation
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
@@ -197,32 +194,38 @@ nnoremap <space><space> <c-w>
 "let g:ale_lint_on_text_changed = 'never'
 "let g:ale_lint_on_insert_leave = 0
 "" linters to run on opening a file
-let g:ale_lint_on_enter = 1
-let g:ale_fix_on_save = 1
-"let b:ale_fixers = {'javascript': ['eslint']}
+"let g:ale_lint_on_enter = 1
+"
+"let g:ale_fix_on_save = 0
 
 noremap <Leader>y "*y
 noremap <Leader>p "*p
 noremap <Leader>Y "+y
 noremap <Leader>P "+p
-vnoremap <C-c> "*y
 
 " Terraform configurations
 let g:terraform_align=1
 let g:terraform_fold_sections=1
 let g:terraform_fmt_on_save=1
-let g:hcl_align=1
 
 " Disable Folding
 set nofoldenable
 
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+" Fugitive Conflict Resolution
+nnoremap <leader>gd :Gvdiffsplit!<CR>
+nnoremap gdh :diffget //2<CR>
+nnoremap gdl :diffget //3<CR>
+nnoremap <leader>gw :Gwrite<CR>
 
-:vnoremap <leader>b y:let @"=system('base64 --decode', @")<cr>gvP
-:vnoremap <leader>B y:let @"=system('base64 -w 0', @")<cr>gvP
+
+" GitGutter
+highlight GitGutterAdd    guifg=#009900 ctermfg=2
+highlight GitGutterChange guifg=#bbbb00 ctermfg=3
+highlight GitGutterDelete guifg=#ff2222 ctermfg=1
+
+" update on save
+autocmd BufWritePost * GitGutter
+
+" Use relativenumber
+set relativenumber

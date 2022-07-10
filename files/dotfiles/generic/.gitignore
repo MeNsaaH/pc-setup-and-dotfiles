@@ -1,0 +1,12 @@
+# VIM Swap files
+*.swp
+*.swo
+*.swn
+*:p
+
+
+.vscode
+test.py
+test-terraform/
+.DS_Store
+

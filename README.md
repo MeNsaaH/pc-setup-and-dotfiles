@@ -1,39 +1,26 @@
 # MeNsaaH's dotfiles
-A collection of my dotfiles on Ubuntu bootstrapped using [YADM](https://yadm.io)
+
+A collection of my dotfiles and system setups on Ubuntu and MacOS as Ansible Roles
 
 prerequisites
 -------------
 
-- YADM
+- ansible
  ```
- sudo apt install yadm
+ pip3 install ansible
  ```
-
-install
--------
-- Create .yadm.conf file at $HOME containing the following variables
-```conf
-GIT_USER_EMAIL=XXXX
-GIT_USER_NAME=XXXXX
-GIT_SIGNING_KEY=XXXX
+- Install ansible requirements 
+```
+ansible-galaxy install -r requirements.txt
 ```
 
-- Clone repo
-
-```bash
-# Replace git url with your fork
-# NOTE: It is important that you clone to ~/dotfiles
-yadm clone --bootstrap https://github.com/mensaah/dotfiles.git
+- Run playbook
 ```
-
+ansible-playbook main.yml -i inventory --ask-become-pass
+```
 
 Todo
 ----
-- [ ] Auto Setup Theme (Gnome-tweaks, dash to panel extensions)
-- [ ] nvm/node
-- [ ] go
-- [ ] Python and python dev tools (install Poetry, pipenv, virtualenvwrapper)
-- [ ] Fonts
-- [ ] Gogh for theme selection
-- [ ] Add conditional installation from conf variable (INSTALL_VIM=1, INSTALL_TMUX=0)
+- [ ] Ubuntu: Auto Setup Theme (Gnome-tweaks, dash to panel extensions)
+- [ ] Ubuntu: Gogh for theme selection
 

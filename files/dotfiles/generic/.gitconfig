@@ -1,17 +1,22 @@
 [user]
   name = Mmadu Manasseh
+  signingkey = 8EED2EE211752102
+  email = mmadumanasseh@gmail.com
 
 [core]
   editor = vim
-  excludesfile = /home/mensaah/.gitignore
+  excludesfile = /Users/manassehmmadu/.gitignore
+	autocrlf = input
 
 [alias]
   rank = shortlog -sn --no-merges
   unstage = reset HEAD --
   last = log -1 HEAD
   cm = !git add . && git commit -m
+  cmm = commit -m
   pyclean = !find -v -iname \"*py[co]\"| xargs git rm --cached -rf
   a = add
+  p = push
   st = status
   s = status
   co = checkout
@@ -20,6 +25,7 @@
   ci = commit
   noff = merge --no-ff
   plr = pull --rebase
+;  prune = "!git branch --merged | grep -v \* | xargs git branch -D"
   amend = commit --amend -m
   wip = commit --no-verify -am "WIP"
   br = branch
@@ -27,6 +33,7 @@
   df = "!f() { [ -z \"$GIT_PREFIX\" ] || cd \"$GIT_PREFIX\" && git diff --color \"$@\" | diff-so-fancy  | less --tabs=4 -RFX; }; f"
   dfs = df --staged
   dfc = "!dfc() { git df $1^ $1; }; dfc"
+  cdiff = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
   please = push --force-with-lease
   publish = "!git push -u origin $(git rev-parse --abbrev-ref HEAD)"
   publishc = "!f() { git push -u ${1:-origin} $(git rev-parse --abbrev-ref HEAD); }; f"
@@ -41,6 +48,8 @@
   alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
   pf = push -f
   change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [ \"$`echo $VAR`\" = '$OLD' ]; then export $VAR='$NEW'; fi\" $@; }; f "
+  large-files="!git rev-list --objects --all | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' | sed -n 's/^blob //p' | sort --numeric-sort --key=2 | cut -c 1-12,41- | $(command -v gnumfmt || echo numfmt) --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest "
+  prlog = "!f() { git log ${1:-develop}..HEAD --reverse --no-merges --pretty='---%n%n**%s** (%h)%n%n%b'; }; f"
 
 [color]
   diff = auto
@@ -51,8 +60,17 @@
 [credential]
   helper = cache --timeout=36000000
 
-[includeIf "gitdir:/home/mensaah/Codes/gitlab/"]
-  path = /home/mensaah/.gitprofiles/mmadu@deimos.co.za
+[commit]
+  gpgsign = true
 
-[includeIf "gitdir:/home/mensaah/Codes/github/"]
-  path = /home/mensaah/.gitprofiles/mmadumanasseh@gmail.com
+[gpg]
+  program = gpg
+
+[init]
+	defaultBranch = main
+
+;[includeIf "gitdir:/Users/manassehmmadu/Codes/github/"]
+;  path = /Users/manassehmmadu/.gitprofiles/mmadumanasseh@gmail.com
+
+;[includeIf "gitdir:/Users/manassehmmadu/Codes/gitlab/MeNsaaH/"]
+;  path = /Users/manassehmmadu/.gitprofiles/gitlab-mmadumanasseh@gmail.com

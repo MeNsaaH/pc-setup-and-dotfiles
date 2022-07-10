@@ -1,15 +1,18 @@
 # HELM Version
-#alias helm=$HOME/.local/bin/helm # Helm v2
-alias helm=/snap/bin/helm
 alias bfg="java -jar $HOME/Downloads/bin/bfg.jar"
-alias open="xdg-open"
+# alias open="xdg-open"
 alias k="kubectl"
+alias km="kustomize"
 alias tf="terraform"
 alias tg="terragrunt"
 alias krew="kubectl krew"
-alias todo="gnome-todo"
 alias tfdocs="terraform-docs"
-alias pbcopy="xclip -sel clip"
 alias b64="base64"
 alias diff="colordiff"
 alias tfer="terraformer-google"
+alias ll="ls -l"
+alias g="git"
+alias h="helm"
+alias tfsort="$HOME/tfvars_sort.py"
+alias puppet-fix="puppet-lint --fix"
+alias lens="open -a lens"
