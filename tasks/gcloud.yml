@@ -1,0 +1,15 @@
+---
+- name: Ensure gcloud installation script is downloaded
+  get_url:
+    url: "{{ gcloud_install_script_url }}"
+    dest: /tmp/
+    mode: 0755
+
+- name: Install gcloud.
+  shell: "/tmp/install_google_cloud_sdk.bash"
+  args:
+    executable: /bin/bash
+    creates: "{{ ansible_env.HOME }}/google-cloud-sdk/bin/gcloud"
+  environment:
+    CLOUDSDK_CORE_DISABLE_PROMPTS: 1
+

@@ -22,6 +22,7 @@ homebrew_installed_packages:
   - argocd
   - autoconf
   - aws-vault
+  - awscli
   - azure-cli
   - bat
   - bfg
@@ -117,11 +118,9 @@ pip_packages:
 # Glob pattern to ansible task files to run after all other tasks are finished.
 post_provision_tasks: []
 
-# defaults file for iterm2-shell-integration
-# install script
-iterm2_shell_integration_script: .iterm2_shell_integration.zsh
-# base url to download from
-iterm2_shell_integration_download_url: https://iterm2.com/shell_integration/zsh
+# iterm2-shell config
+iterm2_normal_font: "Monaco 12"
+iterm2_non_ascii_font: "MesloLGS-NF-Regular 12"
 
 # Kubectl Plugins
 kubectl_plugins:
@@ -143,22 +142,30 @@ kubectl_plugins:
   - who-can
   - whoami
 
+# Fonts must point to a repository/archived repo with a directory containing .ttf or .otf files
 fonts:
-  # - name: Monaco # Font Name
-  #   repo: https://github.com/Karmenzind/monaco-nerd-fonts.git # Repo where font can be gotten from
-  #   dirs: ["fonts"] # directories within repo where fonts are
   - name: Monaco
     repo: https://github.com/Karmenzind/monaco-nerd-fonts.git
-    dirs: ["fonts"]
+    dirs: ["fonts",]
+  - name: Meslo NF
+    repo: https://github.com/romkatv/powerlevel10k-media/
+    dirs: ["."]
   - name: FiraCode
     url: https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip
     dirs: ["ttf"]
-# - name: Meslo
+# - name: NerdFonts
 #   repo: https://github.com/ryanoasis/nerd-fonts.git
-#   dirs: ["patched-fonts/Meslo/M", "patched-fonts/Meslo/L"]
+#   dirs: 
+#     - "patched-fonts/UbuntuMono/Regular"
+#     - "patched-fonts/UbuntuMono/Bold"
+#     - "patched-fonts/Ubuntu/Regular"
+#     - "patched-fonts/Ubuntu/Bold"
+#     - "patched-fonts/Ubuntu/Light"
+#     - "patched-fonts/Ubuntu/Medium"
 
 zsh_plugins:
   - name: zsh-autosuggestions
     repo: https://github.com/zsh-users/zsh-autosuggestions.git
   - name: zsh-syntax-highlighting
     repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+

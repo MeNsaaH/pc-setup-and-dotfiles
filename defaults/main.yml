@@ -1,0 +1,68 @@
+---
+downloads: ~/.ansible-downloads/
+
+# Set to 'true' to configure the Dock via dockutil.
+configure_dock: false
+dockitems_remove: []
+dockitems_persist: []
+
+homebrew_installed_packages: []
+homebrew_taps:
+  - homebrew/core
+  - homebrew/cask
+
+homebrew_cask_appdir: /Applications
+homebrew_cask_apps: []
+
+# See `geerlingguy.mas` role documentation for usage instructions.
+mas_installed_apps: []
+mas_email: ""
+mas_password: ""
+
+osx_script: "~/.osx --no-restart"
+
+# Install packages from other package managers.
+# Note: You are responsible for making sure the required package managers are
+# installed, eg. through homebrew.
+composer_packages: []
+# - name: drush
+#   state: present # present/absent, default: present
+#   version: "^8.1" # default: N/A
+gem_packages: []
+# - name: bundler
+#   state: present # present/absent/latest, default: present
+#   version: "~> 1.15.1" # default: N/A
+npm_packages: []
+# - name: webpack
+#   state: present # present/absent/latest, default: present
+#   version: "^2.6" # default: N/A
+pip_packages:
+# - name: mkdocs
+#   state: present # present/absent/latest, default: present
+#   version: "0.16.3" # default: N/A
+
+# Glob pattern to ansible task files to run after all other tasks are finished.
+post_provision_tasks: []
+
+# defaults file for iterm2-shell-integration
+# install script
+iterm2_shell_integration_script: .iterm2_shell_integration.zsh
+# base url to download from
+iterm2_shell_integration_download_url: https://iterm2.com/shell_integration/zsh
+iterm2_normal_font: "Monaco 12"
+iterm2_non_ascii_font: "Monaco 12"
+
+# Kubectl Plugins
+kubectl_plugins: []
+
+# Fonts must point to a repository/archived repo with a directory containing .ttf or .otf files
+fonts: []
+  # - name: Monaco # Font Name
+  #   repo: https://github.com/Karmenzind/monaco-nerd-fonts.git # Repo where font can be gotten from
+  #   dirs: ["fonts"] # directories within repo where fonts are
+
+#  zsh
+zsh_plugins: []
+
+gcloud_install_script_url: "https://dl.google.com/dl/cloudsdk/channels/rapid/install_google_cloud_sdk.bash"
+gcloud_binary_path: "{{ ansible_env.HOME }}/google-cloud-sdk/bin/gcloud

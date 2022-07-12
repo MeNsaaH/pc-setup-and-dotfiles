@@ -23,11 +23,23 @@
   when: item.url|default ("") != ""
   tags: ["fonts"]
 
-- name: Install {{ item.name }} Font
-  copy:
-    src: "/tmp/{{ item.name }}/{{ dir }}/"
-    dest: "{{ fonts_dir }}"
-  loop: "{{ item.dirs }}"
-  loop_control:
-    loop_var: dir
+- name: debug
+  debug:
+    var: item
   tags: ["fonts"]
+
+- name: set fact
+  set_fact:
+    font_dirs: "{{ font_dirs | default([]) + ['/tmp/' ~ item.name ~ '/' ~ each.0 ~'/*.'~ each.1] }}"
+  loop: "{{  item.dirs | product(['ttf', 'otf'])  }}"
+  loop_control:
+    loop_var: each
+  tags: ["fonts"]
+
+- name: Install {{ font_name }} Font
+  copy:
+    src: "{{ item }}/"
+    dest: "{{ fonts_dir }}"
+  with_fileglob: "{{ font_dirs }}"
+  tags: ["fonts"]
+

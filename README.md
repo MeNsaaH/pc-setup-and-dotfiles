@@ -11,7 +11,7 @@ prerequisites
  ```
 - Install ansible requirements 
 ```
-ansible-galaxy install -r requirements.txt
+ansible-galaxy install -r requirements.yml
 ```
 
 - Run playbook

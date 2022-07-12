@@ -14,3 +14,4 @@
   shell: |
     /usr/libexec/PlistBuddy -c 'Set :"New Bookmarks":0:"Non Ascii Font" "{{ iterm2_non_ascii_font }}"' ~/Library/Preferences/com.googlecode.iterm2.plist
     /usr/libexec/PlistBuddy -c 'Set :"New Bookmarks":0:"Normal Font" "{{ iterm2_normal_font }}"' ~/Library/Preferences/com.googlecode.iterm2.plist
+    /usr/libexec/PlistBuddy -c 'Set :"New Bookmarks":0:"Unlimited Scrollback" 1' ~/Library/Preferences/com.googlecode.iterm2.plist

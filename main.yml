@@ -35,17 +35,11 @@
       loop: "{{ fonts }}"
       tags: ["fonts"]
 
-    - name: Copy dotfiles
-      block:
-        - name: Copy all generic dotfiles files
-          copy:
-            src: "{{ playbook_dir }}/files/dotfiles/generic/"
-            dest: "{{ ansible_env.HOME }}/"
-        - name: Copy all os-specific dotfiles files
-          copy:
-            src: "{{ playbook_dir }}/files/dotfiles/{{ ansible_distribution }}/"
-            dest: "{{ ansible_env.HOME }}/"
+    - include_tasks: tasks/dotfiles.yml
       tags: ["dotfiles", "zsh", "vim"]
+      loop:
+        - "generic"
+        - "{{ ansible_distribution }}"
 
     - name: Setup ZSH and ohmyzsh
       import_tasks: tasks/zsh.yml
@@ -100,3 +94,7 @@
       shell: $(brew --prefix)/opt/fzf/install
       args:
         creates: "{{ ansible_env.HOME }}/.fzf.zsh"
+
+    - name: Install gcloud.
+      import_tasks: tasks/gcloud.yml
+      tags: ["gcloud"]

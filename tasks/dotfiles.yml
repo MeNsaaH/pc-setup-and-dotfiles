@@ -1,0 +1,39 @@
+---
+- name: Find {{ item }} dotfile directories
+  find:
+    recurse: true
+    hidden: true
+    file_type: directory
+    path: "{{ playbook_dir }}/files/dotfiles/{{ item }}/"
+  register: find_dotfiles_dirs
+  tags: ["dotfiles", "zsh", "vim"]
+
+- name: Ensure all {{ item }} dotfiles directory exists on {{ ansible_env.HOME }}
+  file:
+    state: directory
+    path: "{{ dir.path | replace((playbook_dir + '/files/dotfiles/' + item + '/'), (ansible_env.HOME + '/')) }}"
+  loop: "{{ find_dotfiles_dirs.files }}"
+  loop_control:
+    loop_var: dir
+  tags: ["dotfiles", "zsh", "vim"]
+
+- name: Find {{ item }} dotfiles
+  find:
+    recurse: true
+    hidden: true
+    path: "{{ playbook_dir }}/files/dotfiles/{{ item }}/"
+  tags: ["dotfiles", "zsh", "vim"]
+  register: find_dotfiles
+
+- name: Symlink all {{ item }} dotfiles
+  file:
+    state: link
+    force: yes
+    src: "{{ file.path }}"
+    dest: "{{ file.path | replace((playbook_dir + '/files/dotfiles/' + item + '/'), (ansible_env.HOME + '/')) }}"
+  loop: "{{ find_dotfiles.files }}"
+  loop_control:
+    loop_var: file
+  tags: ["dotfiles", "zsh", "vim"]
+
+
