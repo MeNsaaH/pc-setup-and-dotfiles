@@ -5,7 +5,7 @@
 
 [core]
   editor = vim
-  excludesfile = /Users/manassehmmadu/.gitignore
+  excludesfile = /Users/manasseh/.gitignore
 	autocrlf = input
 
 [alias]

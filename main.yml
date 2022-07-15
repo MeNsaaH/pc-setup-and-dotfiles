@@ -25,8 +25,18 @@
         - ansible_distribution == "MacOSX"
 
   tasks:
-    - import_tasks: tasks/extra-packages.yml
-      tags: ["extra-packages"]
+    - name: "Ensure required directories ({{ item }}) exists"
+      file:
+        state: directory
+        path: "{{ item }}"
+      loop: "{{ required_directories }}"
+
+    - name: Git Config
+      community.general.git_config:
+        name: "{{ item.name }}"
+        scope: global
+        value: "{{ item.value }}"
+      loop: "{{ git_configs }}"
 
     - name: Fonts installation
       include_tasks: "tasks/fonts.yml"
@@ -98,3 +108,24 @@
     - name: Install gcloud.
       import_tasks: tasks/gcloud.yml
       tags: ["gcloud"]
+
+    - name: Terraform setup
+      block:
+        - name: Install terraform versions using tfenv
+          shell: |
+            tfenv install latest
+            tfenv use latest
+          args:
+            creates: /usr/local/bin/terraform
+      tags: ["terraform"]
+
+    - name: Node/NVM setup
+      block:
+        - name: Install node versions using nvm
+          shell: |
+            nvm install node
+          args:
+      tags: ["node"]
+
+    - import_tasks: tasks/extra-packages.yml
+      tags: ["extra-packages"]

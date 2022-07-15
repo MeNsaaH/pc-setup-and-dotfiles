@@ -19,6 +19,7 @@ dockitems_persist:
 
 homebrew_installed_packages:
   - aquasecurity/trivy/trivy
+  - ansible-lint
   - argocd
   - autoconf
   - aws-vault
@@ -27,28 +28,38 @@ homebrew_installed_packages:
   - bat
   - bfg
   - colordiff
+  - composer
   - derailed/k9s/k9s
   - diff-so-fancy
   - docker-credential-helper-ecr
   - duf
+  - elixir
   - fzf
+  - hadolint
   - hashicorp/tap/vault
   - hashicorp/tap/packer
+  - gh
   - go
   - goenv
   - gnu-tar
   - gnupg
   - htop
+  - name: libpq
+    state: linked
+  - jq
   - kubernetes-cli
   - kubeseal
   - kustomize
   - mercurial
+  - name: mysql-client
+    state: linked
   - nvm
   - openjdk
   - podman
   - pre-commit
   - pyenv
   - ruby
+  - shellcheck
   - shfmt
   - sops
   - telnet
@@ -66,6 +77,7 @@ homebrew_installed_packages:
 homebrew_taps:
   - homebrew/core
   - homebrew/cask
+  - homebrew/cask-fonts
   - hashicorp/tap
   - vmware-tanzu/carvel
 
@@ -108,12 +120,13 @@ gem_packages: []
 # - name: bundler
 #   state: present # present/absent/latest, default: present
 #   version: "~> 1.15.1" # default: N/A
-npm_packages: []
-# - name: webpack
-#   state: present # present/absent/latest, default: present
-#   version: "^2.6" # default: N/A
+
+npm_packages:
+  - cspell
+
 pip_packages:
   - virtualenvwrapper
+  - yamlfix
 
 # Glob pattern to ansible task files to run after all other tasks are finished.
 post_provision_tasks: []
@@ -147,21 +160,15 @@ fonts:
   - name: Monaco
     repo: https://github.com/Karmenzind/monaco-nerd-fonts.git
     dirs: ["fonts",]
-  - name: Meslo NF
-    repo: https://github.com/romkatv/powerlevel10k-media/
+  - name: Meslo
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip
     dirs: ["."]
   - name: FiraCode
-    url: https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip
-    dirs: ["ttf"]
-# - name: NerdFonts
-#   repo: https://github.com/ryanoasis/nerd-fonts.git
-#   dirs: 
-#     - "patched-fonts/UbuntuMono/Regular"
-#     - "patched-fonts/UbuntuMono/Bold"
-#     - "patched-fonts/Ubuntu/Regular"
-#     - "patched-fonts/Ubuntu/Bold"
-#     - "patched-fonts/Ubuntu/Light"
-#     - "patched-fonts/Ubuntu/Medium"
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
+    dirs: ["."]
+  - name: UbuntuMono
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/UbuntuMono.zip
+    dirs: ["."]
 
 zsh_plugins:
   - name: zsh-autosuggestions
@@ -169,3 +176,11 @@ zsh_plugins:
   - name: zsh-syntax-highlighting
     repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
 
+required_directories:
+  - "{{ ansible_env.HOME }}/.nvm"
+  - "{{ ansible_env.HOME }}/.terraform.d/cache"
+
+
+git_configs:
+  - name: core.excludesfile
+    value: "{{ ansible_env.HOME }}/.gitignore"

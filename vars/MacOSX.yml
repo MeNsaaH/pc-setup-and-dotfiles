@@ -1,3 +1,3 @@
 fonts_dir: "{{ ansible_env.HOME }}/Library/Fonts"
 iterm2_normal_font: "Monaco 12"
-iterm2_non_ascii_font: "MesloLGS-NF-Regular 12"
+iterm2_non_ascii_font: "MesloLGSNer-Regula 12"

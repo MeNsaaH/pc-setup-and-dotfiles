@@ -8,6 +8,8 @@
   get_url:
     url: "{{ iterm2_shell_integration_download_url }}"
     dest: "{{ ansible_env.HOME }}/{{ iterm2_shell_integration_script }}"
+    mode: 0755
+
   when: iterm2_integration_exists.stat.exists == False
 
 - name: Set Font configuration
