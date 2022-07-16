@@ -38,6 +38,7 @@ homebrew_installed_packages:
   - hadolint
   - hashicorp/tap/vault
   - hashicorp/tap/packer
+  - helm
   - gh
   - go
   - goenv
@@ -47,6 +48,7 @@ homebrew_installed_packages:
   - name: libpq
     state: linked
   - jq
+  - kind
   - kubernetes-cli
   - kubeseal
   - kustomize
