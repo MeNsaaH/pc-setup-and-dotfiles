@@ -45,16 +45,12 @@ homebrew_installed_packages:
   - gnu-tar
   - gnupg
   - htop
-  - name: libpq
-    state: linked
   - jq
   - kind
   - kubernetes-cli
   - kubeseal
   - kustomize
   - mercurial
-  - name: mysql-client
-    state: linked
   - nvm
   - openjdk
   - podman
@@ -67,6 +63,7 @@ homebrew_installed_packages:
   - telnet
   - name: terraform
     state: absent
+    install_options: ignore-dependencies # terraform is managed by tfenv
   - terraform-docs
   - name: terragrunt
     install_options: ignore-dependencies # terraform is managed by tfenv
@@ -118,17 +115,21 @@ composer_packages: []
 # - name: drush
 #   state: present # present/absent, default: present
 #   version: "^8.1" # default: N/A
+#
 gem_packages: []
 # - name: bundler
 #   state: present # present/absent/latest, default: present
 #   version: "~> 1.15.1" # default: N/A
 
 npm_packages:
+  - npm
   - cspell
+  - yarn
 
 pip_packages:
   - virtualenvwrapper
   - yamlfix
+  - yamllint
 
 # Glob pattern to ansible task files to run after all other tasks are finished.
 post_provision_tasks: []
@@ -136,6 +137,9 @@ post_provision_tasks: []
 # iterm2-shell config
 iterm2_normal_font: "Monaco 12"
 iterm2_non_ascii_font: "MesloLGS-NF-Regular 12"
+iterm2_shell_integration_script: .iterm2_shell_integration.zsh
+# base url to download from
+iterm2_shell_integration_download_url: https://iterm2.com/shell_integration/zsh
 
 # Kubectl Plugins
 kubectl_plugins:
@@ -168,7 +172,7 @@ fonts:
   - name: FiraCode
     url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
     dirs: ["."]
-  - name: UbuntuMono
+  - name: Ubuntu Mono
     url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/UbuntuMono.zip
     dirs: ["."]
 
@@ -182,7 +186,20 @@ required_directories:
   - "{{ ansible_env.HOME }}/.nvm"
   - "{{ ansible_env.HOME }}/.terraform.d/cache"
 
+git:
+  name: Mmadu Manasseh
+  email: mmadumanasseh@gmail.com
+  signingkey: 8EED2EE211752102
 
 git_configs:
+  - name: user.name
+    value: "{{ git.name }}"
+  - name: user.email
+    value: "{{ git.email }}"
+  - name: user.signingkey
+    value: "{{ git.signingkey }}"
   - name: core.excludesfile
     value: "{{ ansible_env.HOME }}/.gitignore"
+      
+gcloud_install_script_url: "https://dl.google.com/dl/cloudsdk/channels/rapid/install_google_cloud_sdk.bash"
+gcloud_binary_path: "{{ ansible_env.HOME }}/google-cloud-sdk/bin/gcloud"

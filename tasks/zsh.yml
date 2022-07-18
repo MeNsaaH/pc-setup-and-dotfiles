@@ -1,4 +1,4 @@
-- name: Ensure installation script is downloaded.
+- name: Ensure zsh installation script is downloaded.
   get_url:
     url: https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
     dest: /tmp/ohmyzsh-installer.sh

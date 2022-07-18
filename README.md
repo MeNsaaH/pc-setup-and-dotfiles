@@ -5,10 +5,13 @@ A collection of my dotfiles and system setups on Ubuntu and MacOS as Ansible Rol
 prerequisites
 -------------
 
+- Ensure Python 3 is installed
+
 - ansible
- ```
+```
  pip3 install ansible
- ```
+```
+
 - Install ansible requirements 
 ```
 ansible-galaxy install -r requirements.yml

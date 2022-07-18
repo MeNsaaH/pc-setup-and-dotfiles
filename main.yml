@@ -2,8 +2,8 @@
 - hosts: all
 
   vars_files:
-    - default-config.yml
     - vars/{{ ansible_distribution }}.yml
+    - default-config.yml
 
   roles:
     - role: elliotweiser.osx-command-line-tools
@@ -122,8 +122,12 @@
     - name: Node/NVM setup
       block:
         - name: Install node versions using nvm
+          environment:
+            NVM_DIR: "{{ ansible_env.HOME }}/.nvm"
           shell: |
+            source $NVM_DIR/nvm.sh
             nvm install node
+            nvm use node
           args:
       tags: ["node"]
 

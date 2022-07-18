@@ -54,7 +54,6 @@ Plugin 'hashivim/vim-terraform'
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plugin 'junegunn/fzf.vim'
 Plugin 'fatih/vim-go'
-Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
@@ -64,6 +63,8 @@ Plugin 'rodjek/vim-puppet'
 Plugin 'tomasr/molokai'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'pearofducks/ansible-vim'
+Plugin 'elixir-editors/vim-elixir'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
