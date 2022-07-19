@@ -46,6 +46,7 @@ homebrew_installed_packages:
   - gnupg
   - htop
   - jq
+  - karabiner-elements
   - kind
   - kubernetes-cli
   - kubeseal
