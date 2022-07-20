@@ -154,8 +154,8 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 # VirtualenvWrapper
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-source /usr/local/bin/virtualenvwrapper.sh
+export VIRTUALENVWRAPPER_PYTHON=$(which python3)
+source $(which virtualenvwrapper.sh)
 
 export KUBECTL_EXTERNAL_DIFF="colordiff -N -u"
 
@@ -165,6 +165,7 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH="/usr/local/lib/ruby/gems/3.1.0/bin:/usr/local/opt/ruby/bin:$PATH"
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
+export PATH="/opt/homebrew/bin/:$PATH"
 export CPPFLAGS="-I/usr/local/opt/openjdk/include"
 
 

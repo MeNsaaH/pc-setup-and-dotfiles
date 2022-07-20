@@ -46,7 +46,6 @@ homebrew_installed_packages:
   - gnupg
   - htop
   - jq
-  - karabiner-elements
   - kind
   - kubernetes-cli
   - kubeseal
@@ -89,6 +88,7 @@ homebrew_cask_apps:
   - iterm2
   - google-chrome
   - joplin
+  - karabiner-elements
   - lastpass
   - lens
   - macvim
@@ -97,7 +97,7 @@ homebrew_cask_apps:
   - pritunl
   - slack
   - visual-studio-code
-  - virtualbox
+#  - virtualbox
   - vlc
   - whatsapp
   - zoom
