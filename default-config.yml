@@ -88,9 +88,9 @@ homebrew_cask_apps:
   - iterm2
   - google-chrome
   - joplin
-  - karabiner-elements
   - lastpass
   - lens
+  - logitech-options
   - macvim
   - miro
   - openvpn-connect
