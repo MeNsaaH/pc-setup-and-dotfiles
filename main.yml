@@ -37,6 +37,7 @@
         scope: global
         value: "{{ item.value }}"
       loop: "{{ git_configs }}"
+      tags: ["git"]
 
     - name: Fonts installation
       include_tasks: "tasks/fonts.yml"
