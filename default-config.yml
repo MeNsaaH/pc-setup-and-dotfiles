@@ -83,14 +83,15 @@ homebrew_taps:
 homebrew_cask_appdir: /Applications
 homebrew_cask_apps:
   - 1password
+  - appcleaner
   - authy
   - docker
+  - insomnia
   - iterm2
   - google-chrome
   - joplin
   - lastpass
   - lens
-  - logitech-options
   - macvim
   - miro
   - openvpn-connect
