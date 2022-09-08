@@ -56,7 +56,7 @@ homebrew_installed_packages:
   - podman
   - pre-commit
   - pyenv
-  - ruby
+  - rbenv
   - shellcheck
   - shfmt
   - sops
@@ -65,12 +65,14 @@ homebrew_installed_packages:
     state: absent
     install_options: ignore-dependencies # terraform is managed by tfenv
   - terraform-docs
+  - terraformer
   - name: terragrunt
     install_options: ignore-dependencies # terraform is managed by tfenv
   - tfenv
   - tflint
   - tmux
   - tree
+  - ubuntu/microk8s/microk8s
   - ytt
 
 homebrew_taps:
@@ -86,6 +88,7 @@ homebrew_cask_apps:
   - appcleaner
   - authy
   - docker
+  - flycut
   - insomnia
   - iterm2
   - google-chrome
@@ -94,8 +97,10 @@ homebrew_cask_apps:
   - lens
   - macvim
   - miro
+  - obs
   - openvpn-connect
   - pritunl
+  - session-manager-plugin
   - slack
   - visual-studio-code
 #  - virtualbox
@@ -147,6 +152,7 @@ iterm2_shell_integration_download_url: https://iterm2.com/shell_integration/zsh
 kubectl_plugins:
   - access-matrix
   - ctx
+  - deprecations
   - df-pv
   - doctor
   - get-all

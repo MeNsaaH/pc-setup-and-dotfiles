@@ -125,7 +125,6 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/google-cloud-sdk/bin
-export TF_PLUGIN_CACHE_DIR=$HOME/.terraform.d/cache
 
 source $HOME/.aliases
 
@@ -163,10 +162,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export PATH="/usr/local/lib/ruby/gems/3.1.0/bin:/usr/local/opt/ruby/bin:$PATH"
+export PATH="/usr/local/lib/ruby/gems/3.1.0/bin:/usr/local/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/3.1.0/bin:/opt/homebrew/opt/ruby/bin:$PATH"
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export PATH="/opt/homebrew/bin/:$PATH"
-export CPPFLAGS="-I/usr/local/opt/openjdk/include"
+export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/ruby/include -I/usr/local/opt/openjdk/include"
 
 
 
@@ -178,3 +178,20 @@ export CPPFLAGS="-I/usr/local/opt/openjdk/include"
 #For pkg-config to find zlib you may need to set:
 #export PKG_CONFIG_PATH="/usr/local/opt/zlib/lib/pkgconfig"
 
+eval "$(rbenv init - zsh)"
+
+knode () {
+	if [[ $1 == -h || $1 == --help ]]
+	then
+		echo "Usage: knode [-n namespace]"
+		echo "If no args are provided, knode will run fzf to present options"
+		return
+	elif [[ $1 == -n ]]
+	then
+		ns="$2"
+	else
+		ns="$(kubectl get namespaces | fzf)"
+	fi
+	nodeName="$(kubectl get pods -n $ns -o wide | fzf | awk '{print $(NF-2)}')"
+	aws ssm start-session --target "$(kubectl describe node $nodeName | awk -F'/' '/aws:\/\/\// {print $NF}')"
+}

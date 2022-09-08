@@ -171,5 +171,4 @@ if [ -f ~/.aliases ]; then
     . ~/.aliases
 fi
 
-export TF_PLUGIN_CACHE_DIR=$HOME/.terraform.d/cache
 export XDG_CONFIG_HOME=$HOME/.config

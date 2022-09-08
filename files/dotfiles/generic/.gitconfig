@@ -17,6 +17,7 @@
   pyclean = !find -v -iname \"*py[co]\"| xargs git rm --cached -rf
   a = add
   p = push
+  pu = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
   st = status
   s = status
   co = checkout
@@ -69,8 +70,8 @@
 [init]
 	defaultBranch = main
 
-;[includeIf "gitdir:/Users/manassehmmadu/Codes/github/"]
-;  path = /Users/manassehmmadu/.gitprofiles/mmadumanasseh@gmail.com
+[includeIf "gitdir:/Users/manassehmmadu/Codes/gitlab/Zapier/"]
+  path = /Users/manassehmmadu/.gitprofiles/gitlab-manasseh.mmadu@zapier.com
 
-;[includeIf "gitdir:/Users/manassehmmadu/Codes/gitlab/MeNsaaH/"]
-;  path = /Users/manassehmmadu/.gitprofiles/gitlab-mmadumanasseh@gmail.com
+[includeIf "gitdir:/Users/manassehmmadu/Codes/gitlab/MeNsaaH/"]
+  path = /Users/manassehmmadu/.gitprofiles/gitlab-mmadumanasseh@gmail.com

@@ -231,3 +231,7 @@ autocmd BufWritePost * GitGutter
 
 " Use relativenumber
 set relativenumber
+
+" Search and replace highlited text
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
