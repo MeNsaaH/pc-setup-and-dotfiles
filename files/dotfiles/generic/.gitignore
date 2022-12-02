@@ -10,3 +10,4 @@ test.py
 test-terraform/
 .DS_Store
 
+files-changed.txt

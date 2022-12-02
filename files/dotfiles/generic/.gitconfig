@@ -75,3 +75,6 @@
 
 [includeIf "gitdir:/Users/manassehmmadu/Codes/gitlab/MeNsaaH/"]
   path = /Users/manassehmmadu/.gitprofiles/gitlab-mmadumanasseh@gmail.com
+  
+[includeIf "gitdir:/Users/manassehmmadu/Codes/github/oVice/"]
+  path = /Users/manassehmmadu/.gitprofiles/github-mmmadu@ovice.co

@@ -1,0 +1,16 @@
+#! /bin/bash
+
+nodeName=
+if [[ $1 == -h || $1 == --help ]]
+then
+  echo "Usage: knode [-n namespace]"
+  echo "If no args are provided, knode will run fzf to present options"
+  exit 0
+elif [[ $1 == -n ]]
+then
+  ns="$2"
+  nodeName="$(kubectl get pods -n $ns -o wide |grep -v NAME | fzf | awk '{print $7}')"
+else
+  nodeName="$(kubectl get nodes |grep -v NAME | fzf | awk '{print $1}')"
+fi
+aws ssm start-session --target "$(kubectl describe node $nodeName | awk -F'/' '/aws:\/\/\// {print $NF}')"

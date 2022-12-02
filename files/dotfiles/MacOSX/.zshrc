@@ -180,18 +180,3 @@ export CPPFLAGS="-I/opt/homebrew/opt/ruby/include -I/usr/local/opt/openjdk/inclu
 
 eval "$(rbenv init - zsh)"
 
-knode () {
-	if [[ $1 == -h || $1 == --help ]]
-	then
-		echo "Usage: knode [-n namespace]"
-		echo "If no args are provided, knode will run fzf to present options"
-		return
-	elif [[ $1 == -n ]]
-	then
-		ns="$2"
-	else
-		ns="$(kubectl get namespaces | fzf)"
-	fi
-	nodeName="$(kubectl get pods -n $ns -o wide | fzf | awk '{print $(NF-2)}')"
-	aws ssm start-session --target "$(kubectl describe node $nodeName | awk -F'/' '/aws:\/\/\// {print $NF}')"
-}

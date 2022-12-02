@@ -64,6 +64,7 @@ Plugin 'tomasr/molokai'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'pearofducks/ansible-vim'
 Plugin 'elixir-editors/vim-elixir'
+Plugin 'mg979/vim-visual-multi'
 
 
 " All of your Plugins must be added before the following line
