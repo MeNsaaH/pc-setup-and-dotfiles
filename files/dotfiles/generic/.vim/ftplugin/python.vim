@@ -2,7 +2,7 @@
 let b:ale_linters = ['flake8', 'pylint']
 
 " Fix Python files with autopep8 and yapf.
-let b:ale_fixers = ['black', 'autopep8', 'yapf']
+let b:ale_fixers = ['black', 'autopep8', 'yapf', 'isort']
 
 " show existing tab with 4 spaces width
 set tabstop=4

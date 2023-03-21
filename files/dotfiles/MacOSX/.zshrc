@@ -122,8 +122,6 @@ if [ -f '$HOME/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/google-clou
 
 ## PATHS
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/google-cloud-sdk/bin
 
 source $HOME/.aliases
@@ -180,3 +178,9 @@ export CPPFLAGS="-I/opt/homebrew/opt/ruby/include -I/usr/local/opt/openjdk/inclu
 
 eval "$(rbenv init - zsh)"
 
+autoload -U compinit; compinit
+
+export GOPATH=$HOME/go
+export GOBIN=$GOPATH/bin
+export GOROOT="$(brew --prefix golang)/libexec"
+export PATH=$PATH:$GOPATH/bin

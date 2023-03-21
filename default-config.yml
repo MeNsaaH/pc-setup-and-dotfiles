@@ -25,6 +25,7 @@ homebrew_installed_packages:
   - aws-vault
   - awscli
   - azure-cli
+  - bash
   - bat
   - bfg
   - colordiff
@@ -40,15 +41,20 @@ homebrew_installed_packages:
   - hashicorp/tap/packer
   - helm
   - gh
+  - git-secrets
+  - gitleaks
   - go
   - goenv
   - gnu-tar
+  - gnu-sed
   - gnupg
   - htop
   - jq
   - kind
+  - kops
   - kubernetes-cli
   - kubeseal
+  - kubebuilder
   - kustomize
   - mercurial
   - nvm
@@ -73,6 +79,7 @@ homebrew_installed_packages:
   - tmux
   - tree
   - ubuntu/microk8s/microk8s
+  - yq
   - ytt
 
 homebrew_taps:
@@ -155,15 +162,18 @@ kubectl_plugins:
   - deprecations
   - df-pv
   - doctor
+  - foreach
   - get-all
   - iexec
   - ingress-nginx
   - node-shell
+  - neat
   - ns
   - popeye
   - prompt
   - rbac-lookup
   - rolesum
+  - score
   - tail
   - tree
   - who-can
@@ -173,7 +183,7 @@ kubectl_plugins:
 fonts:
   - name: Monaco
     repo: https://github.com/Karmenzind/monaco-nerd-fonts.git
-    dirs: ["fonts",]
+    dirs: ["fonts"]
   - name: Meslo
     url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip
     dirs: ["."]
@@ -209,6 +219,6 @@ git_configs:
     value: "{{ git.signingkey[ansible_hostname] }}"
   - name: core.excludesfile
     value: "{{ ansible_env.HOME }}/.gitignore"
-      
+
 gcloud_install_script_url: "https://dl.google.com/dl/cloudsdk/channels/rapid/install_google_cloud_sdk.bash"
 gcloud_binary_path: "{{ ansible_env.HOME }}/google-cloud-sdk/bin/gcloud"

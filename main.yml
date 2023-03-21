@@ -45,12 +45,19 @@
         font: "{{ item }}"
       loop: "{{ fonts }}"
       tags: ["fonts"]
+      args:
+        apply:
+          tags:
+            - fonts
 
     - include_tasks: tasks/dotfiles.yml
       tags: ["dotfiles", "zsh", "vim"]
       loop:
         - "generic"
         - "{{ ansible_distribution }}"
+      args:
+        apply:
+          tags: ["dotfiles", "zsh", "vim"]
 
     - name: Setup ZSH and ohmyzsh
       import_tasks: tasks/zsh.yml
@@ -77,29 +84,11 @@
       tags: ["iterm"]
 
     - name: Setup kubectl and kubernetes components
-      tags: ["kubectl", "k8s"]
-      block:
-        - name: Setting krew name
-          set_fact:
-            krew: krew-{{ ansible_system |lower }}_{{ "amd64" if ansible_architecture == "x86_64" else "arm64" if ansible_architecture == "arm64" else "" }}
-        - name: Download and Unarchive krew
-          unarchive:
-            src: https://github.com/kubernetes-sigs/krew/releases/latest/download/{{ krew }}.tar.gz
-            dest: /tmp/
-            remote_src: yes
-            creates: /tmp/{{ krew }}
-        - name: Ensure krew is installed.
-          shell: |
-            /tmp/{{ krew }} install krew
-          args:
-            executable: /bin/bash
-            creates: "{{ ansible_env.HOME }}/.krew/bin/kubectl-krew"
-
-        - name: install kubectl plugins
-          shell: "/tmp/{{ krew }} install {{ item }}"
-          args:
-            creates: "{{ ansible_env.HOME }}/.krew/bin/kubectl-{{ item | replace ('-', '_') }}"
-          loop: "{{ kubectl_plugins }}"
+      tags: ["kubectl", "krew"]
+      include_tasks: "tasks/krew.yml"
+      args:
+        apply:
+          tags: ["kubectl", "krew"]
 
     - name: ensure fzf completions are installed.
       shell: $(brew --prefix)/opt/fzf/install

@@ -1,6 +1,6 @@
 ---
 - name: Check {{ item.name }} fonts installed
-  find: 
+  find:
     path: "{{ fonts_dir }}"
     patterns: "{{ item.name }}*.ttf,{{ item.name }}*.otf"
   register: installed_fonts
@@ -10,7 +10,7 @@
   set_fact:
     font_not_installed: "{{  installed_fonts.files |length <= 0 }}"
   tags: ["fonts"]
-      
+
 - name: Create /tmp/{{ item.name }} directory if not exist
   file:
     path: "/tmp/{{ item.name }}"
@@ -24,7 +24,7 @@
     dest: "/tmp/{{ item.name }}"
     accept_hostkey: "true"
     depth: 1
-  when: 
+  when:
     - item.repo|default ("") != ""
     - font_not_installed
   tags: ["fonts"]
@@ -35,7 +35,7 @@
     dest: "/tmp/{{ item.name }}"
     remote_src: yes
     creates: /tmp/{{ item.name }}/{{ item.dirs }}
-  when: 
+  when:
     - item.url|default ("") != ""
     - font_not_installed
   tags: ["fonts"]
@@ -58,4 +58,3 @@
     - font_not_installed
     - '"Windows" not in item'
   tags: ["fonts"]
-
