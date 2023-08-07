@@ -23,7 +23,7 @@
     version: "{{ item.version | default(omit) }}"
     executable: "{{ item.executable | default('pip3') }}"
   loop: "{{ pip_packages }}"
-  become: true
+  become: false
 
 - name: Install global Ruby gems.
   gem:

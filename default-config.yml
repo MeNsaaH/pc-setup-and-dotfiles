@@ -225,41 +225,41 @@ git_configs:
 snap_packages:
   - name: google-cloud-sdk
     classic: true
-  - name: diff-so-fancy
   - name: aws-cli
     classic: true
   - name: helm
     classic: true
   - name: go
     classic: true
-  - name: htop
   - name: kubectl
     classic: true
-  - name: kustomize
-  - name: jq
-  - name: yq
-  - name: authy
-  - name: slack
   - name: code
     classic: true
-  - name: zoom-client
-  - name: docker
-  - name: insomnia
+  - diff-so-fancy
+  -  htop
+  -  kustomize
+  - jq
+  - yq
+  - authy
+  - slack
+  - zoom-client
+  - docker
+  - insomnia
 
 apt_packages:
-  - name: colordiff
+  - colordiff
+  - fzf
+  - tmux
+  - zsh
+  - podman
+  - gnome-tweaks
+  - gnome-shell
+  - gnome-shell-extensions
+  - chrome-gnome-shell
 #  - name: argocd
 #    url: https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
   - name: sops
     url: https://github.com/getsops/sops/releases/latest/download/sops_3.7.3_amd64.deb
-  - name: fzf
-  - name: tmux
-  - name: zsh
-  - name: podman
-  - name: gnome-tweaks
-  - name: gnome-shell
-  - name: gnome-shell-extensions
-  - name: chrome-gnome-shell
 
 
 #go_binaries:
