@@ -31,6 +31,12 @@
         path: "{{ item }}"
       loop: "{{ required_directories }}"
 
+    - name: "Install required {{ ansible_distribution }} Packages"
+      import_tasks: "tasks/system_packages.yml"
+      when:
+        - ansible_distribution == "Ubuntu"
+      become: true
+
     - name: Git Config
       community.general.git_config:
         name: "{{ item.name }}"
@@ -94,10 +100,6 @@
       shell: $(brew --prefix)/opt/fzf/install
       args:
         creates: "{{ ansible_env.HOME }}/.fzf.zsh"
-
-    - name: Install gcloud.
-      import_tasks: tasks/gcloud.yml
-      tags: ["gcloud"]
 
     - name: Terraform setup
       block:

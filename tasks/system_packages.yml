@@ -1,0 +1,24 @@
+- name: "Update apt cache"
+  ansible.builtin.apt:
+    update_cache: true
+  tags: ["apt", "system-packages"]
+
+- name: "Install builtin apt packages"
+  ansible.builtin.apt:
+    package: "{{ apt_packages | rejectattr('url', 'defined')| map(attribute='name') | list }}"
+    state: present
+  tags: ["apt", "system-packages"]
+
+- name: "Install external deb packages"
+  ansible.builtin.apt:
+    state: present
+    deb: "{{ item }}"
+  loop: "{{ apt_packages| selectattr('url', 'defined')| map(attribute='url') | list }}" 
+  tags: ["apt", "system-packages"]
+
+- name: "Install snap packages"
+  community.general.snap:
+    name : "{{ item.name }}"
+    classic: "{{ item.classic |default(omit) }}"
+  loop: "{{ snap_packages }}"
+  tags: ["snap", "system-packages"]
