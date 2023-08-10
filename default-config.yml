@@ -236,19 +236,18 @@ snap_packages:
   - name: code
     classic: true
   - diff-so-fancy
-  -  htop
-  -  kustomize
+  - kustomize
   - jq
   - yq
   - authy
   - slack
-  - zoom-client
-  - docker
+#  - docker
   - insomnia
 
 apt_packages:
   - colordiff
   - fzf
+  - htop
   - tmux
   - zsh
   - podman
@@ -260,6 +259,8 @@ apt_packages:
 #    url: https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
   - name: sops
     url: https://github.com/getsops/sops/releases/latest/download/sops_3.7.3_amd64.deb
+  - name: zoom
+    url: https://zoom.us/client/latest/zoom_amd64.deb
 
 
 #go_binaries:
