@@ -6,6 +6,7 @@
     # Ansible 2.4 supports `global_command` making `working_dir` optional.
     working_dir: "{{ lookup('env', 'COMPOSER_HOME') | default('~/.composer', true) }}"
   loop: "{{ composer_packages }}"
+  tags: ["composer-packages"]
 
 - name: Install global NPM packages.
   npm:
@@ -15,6 +16,7 @@
     global: true
     executable: "{{ item.executable | default(omit) }}"
   loop: "{{ npm_packages }}"
+  tags: ["npm-packages"]
 
 - name: Install global Pip packages.
   pip:
@@ -24,6 +26,7 @@
     executable: "{{ item.executable | default('pip3') }}"
   loop: "{{ pip_packages }}"
   become: false
+  tags: ["pip-packages"]
 
 - name: Install global Ruby gems.
   gem:
@@ -33,3 +36,12 @@
     user_install: false
     executable: "{{ item.executable | default(omit) }}"
   loop: "{{ gem_packages }}"
+  tags: ["gem-packages"]
+
+- name: Install github packages
+  include_tasks: "github-packages.yml"
+  loop: "{{ github_packages }}"
+  tags: ["github-packages"]
+  args:
+    apply:
+      tags: ["github-packages"]

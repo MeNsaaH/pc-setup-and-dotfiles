@@ -36,6 +36,7 @@
       when:
         - ansible_distribution == "Ubuntu"
       become: true
+      tags: ["system-packages"]
 
     - name: Git Config
       community.general.git_config:
@@ -100,33 +101,44 @@
       shell: $(brew --prefix)/opt/fzf/install
       args:
         creates: "{{ ansible_env.HOME }}/.fzf.zsh"
+      when:
+        - ansible_distribution == "MacOSX"
+
+    - import_tasks: tasks/extra-packages.yml
+      tags: ["extra-packages"]
 
     - name: Terraform setup
       block:
         - name: Check if Terraform is installed.
-          shell: which terraform
+          shell: terraform --version
           register: which_terraform
+          failed_when: no
+          changed_when: no
         - name: Install terraform versions using tfenv
-          shell: |
-            tfenv install latest
-            tfenv use latest
+          shell:
+            executable: /bin/bash
+            cmd: |
+              tfenv install latest
+              tfenv use latest
           when: which_terraform.rc != 0
       tags: ["terraform"]
 
     - name: Node/NVM setup
       block:
         - name: Check if Node is installed.
-          shell: which node
+          shell: node --version
           register: which_node
+          failed_when: no
+          changed_when: no
         - name: Install node versions using nvm
           environment:
             NVM_DIR: "{{ ansible_env.HOME }}/.nvm"
-          shell: |
-            source $NVM_DIR/nvm.sh
-            nvm install node
-            nvm use node
+          shell:
+            executable: /bin/bash
+            cmd: |
+              source $NVM_DIR/nvm.sh
+              nvm install node
+              nvm use node
           when: which_node.rc != 0
       tags: ["node"]
 
-    - import_tasks: tasks/extra-packages.yml
-      tags: ["extra-packages"]

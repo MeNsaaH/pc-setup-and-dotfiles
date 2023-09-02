@@ -1,24 +1,52 @@
+---
+- name: Add Apt signing keys
+  ansible.builtin.apt_key:
+    url: "{{ item.key_url }}"
+    keyring: "{{ item.keyring }}"
+  loop: "{{ apt_packages| selectattr('key_url', 'defined') | list }}"
+  tags: ["apt"]
+
+- name: "Add apt Repositories"
+  ansible.builtin.apt_repository:
+    state: present
+    repo: "{{ item }}"
+  loop: "{{ apt_packages| selectattr('repository', 'defined')| map(attribute='repository') | list }}"
+  tags: ["apt"]
+
 - name: "Update apt cache"
   ansible.builtin.apt:
     update_cache: true
-  tags: ["apt", "system-packages"]
+  tags: ["apt"]
 
 - name: "Install builtin apt packages"
   ansible.builtin.apt:
-    package: "{{ apt_packages | rejectattr('url', 'defined')| list }}"
+    package: "{{ apt_packages | rejectattr('url', 'defined')| rejectattr('repository', 'defined')|list }}"
     state: present
-  tags: ["apt", "system-packages"]
+  tags: ["apt"]
+
+- name: "Install private PPA apt packages"
+  ansible.builtin.apt:
+    package: "{{ apt_packages | selectattr('repository', 'defined')| map(attribute='name') | list }}"
+    state: present
+  tags: ["apt"]
 
 - name: "Install external deb packages"
-  ansible.builtin.apt:
-    state: present
-    deb: "{{ item }}"
-  loop: "{{ apt_packages| selectattr('url', 'defined')| map(attribute='url') | list }}" 
-  tags: ["apt", "system-packages"]
+  tags: ["apt"]
+  block:
+    - name: Check if installed
+      shell: "dpkg-query -s {{ item.name }}"
+      register: result
+      loop: "{{ apt_packages| selectattr('url', 'defined')| list }}"
+    - name: Install package
+      ansible.builtin.apt:
+        state: present
+        deb: "{{ item.item.url }}"
+      when: item.rc != 0 and not (item.item.upgrade|default (false))
+      loop: "{{ result.results }}"
 
 - name: "Install snap packages"
   community.general.snap:
-    name : "{{ item.name | default(item) }}"
+    name: "{{ item.name | default(item) }}"
     classic: "{{ item.classic |default(omit) }}"
   loop: "{{ snap_packages }}"
-  tags: ["snap", "system-packages"]
+  tags: ["snap"]

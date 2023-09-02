@@ -1,24 +1,33 @@
 ---
-- name: Setting krew name
-  set_fact:
-    krew: krew-{{ ansible_system |lower }}_{{ "amd64" if ansible_architecture == "x86_64" else "arm64" if ansible_architecture == "arm64" else "" }}
+- name: Check if krew is installed.
+  shell: krew version
+  register: krew_version
+  failed_when: no
+  changed_when: no
 
-- name: Download and Unarchive krew
-  unarchive:
-    src: https://github.com/kubernetes-sigs/krew/releases/latest/download/{{ krew }}.tar.gz
-    dest: /tmp/
-    remote_src: yes
-    creates: /tmp/{{ krew }}
+- name: Install Krew
+  block:
+  - name: Setting krew name
+    set_fact:
+      krew: krew-{{ ansible_system |lower }}_{{ "amd64" if ansible_architecture == "x86_64" else "arm64" if ansible_architecture == "arm64" else "" }}
 
-- name: Ensure krew is installed.
-  shell: |
-    /tmp/{{ krew }} install krew
-  args:
-    executable: /bin/bash
-    creates: "{{ ansible_env.HOME }}/.krew/bin/kubectl-krew"
+  - name: Download and Unarchive krew
+    unarchive:
+      src: https://github.com/kubernetes-sigs/krew/releases/latest/download/{{ krew }}.tar.gz
+      dest: /tmp/
+      remote_src: yes
+      creates: /tmp/{{ krew }}
+
+  - name: Ensure krew is installed.
+    shell: |
+      /tmp/{{ krew }} install krew
+    args:
+      executable: /bin/bash
+      creates: "{{ ansible_env.HOME }}/.krew/bin/kubectl-krew"
+  when: krew_version.rc != 0
 
 - name: install kubectl plugins
-  shell: "/tmp/{{ krew }} install {{ item }}"
+  shell: "{{ ansible_env.HOME }}/.krew/bin/kubectl-krew install {{ item }}"
   args:
     creates: "{{ ansible_env.HOME }}/.krew/bin/kubectl-{{ item | replace ('-', '_') }}"
   loop: "{{ kubectl_plugins }}"

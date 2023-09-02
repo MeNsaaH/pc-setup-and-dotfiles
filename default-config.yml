@@ -160,6 +160,7 @@ iterm2_shell_integration_download_url: https://iterm2.com/shell_integration/zsh
 kubectl_plugins:
   - access-matrix
   - ctx
+  - cost
   - deprecations
   - df-pv
   - doctor
@@ -223,8 +224,6 @@ git_configs:
     value: "{{ ansible_env.HOME }}/.gitignore"
 
 snap_packages:
-  - name: google-cloud-sdk
-    classic: true
   - name: aws-cli
     classic: true
   - name: helm
@@ -255,14 +254,27 @@ apt_packages:
   - gnome-shell
   - gnome-shell-extensions
   - chrome-gnome-shell
-#  - name: argocd
-#    url: https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+  - xpad
+  - silversearcher-ag
   - name: sops
     url: https://github.com/getsops/sops/releases/latest/download/sops_3.7.3_amd64.deb
   - name: zoom
     url: https://zoom.us/client/latest/zoom_amd64.deb
+  - name: obs-studio
+    repository: "ppa:obsproject/obs-studio"
+  - name: google-cloud-cli
+    repository: "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main"
+    key_url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    keyring: /usr/share/keyrings/cloud.google.gpg
+  - google-cloud-sdk-gke-gcloud-auth-plugin # not adding repo because it's already added above
 
-
-#go_binaries:
-#  - go.mozilla.org/sops/cmd/sops
-
+github_packages:
+  - name: argocd
+    url: "https://github.com/argoproj/argo-cd/releases/latest/download/argocd-{{ (ansible_os_family|lower == 'debian') | ternary('linux', (ansible_os_family|lower)) }}-{{ (ansible_architecture == 'x86_64') | ternary('amd64', ansible_architecture) }}"
+  - name: tfenv
+    url: https://github.com/tfutils/tfenv.git
+    clone: true
+    depth: 1
+    post_install_script: 'export PATH="$HOME/.tfenv/bin:$PATH"'
+    bash_completions: ""
+    zsh_completions: ""

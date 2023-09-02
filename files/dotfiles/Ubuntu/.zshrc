@@ -157,6 +157,10 @@ function pyclean {
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+[-f /usr/share/doc/fzf/examples/key-bindings.zsh] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+[-f  /usr/share/doc/fzf/examples/completion.zsh] && source /usr/share/doc/fzf/examples/completion.zsh
+
+
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 export GOPATH=$HOME/Codes/go
 
@@ -165,3 +169,6 @@ if [ -f ~/.aliases ]; then
 fi
 
 export XDG_CONFIG_HOME=$HOME/.config
+# BEGIN ANSIBLE MANAGED BLOCK
+export PATH="$HOME/.tfenv/bin:$PATH"
+# END ANSIBLE MANAGED BLOCK

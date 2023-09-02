@@ -235,4 +235,7 @@ set relativenumber
 
 " Search and replace highlited text
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+nnoremap <leader>P "*p
+nnoremap <leader>Y "*y
+vnoremap <leader>Y "*y
 

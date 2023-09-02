@@ -1,0 +1,74 @@
+- name: "Check if {{ item.name }} is installed"
+  shell: "which {{item.name}}"
+  register: check_install
+  failed_when: no
+  changed_when: no
+
+- name: "Install {{item.name }} binary"
+  block:
+  - set_fact:
+      repo_details: "{{ item.url |split('/')| last }}"
+      when: check_install.rc !=0
+
+  - name: "Download {{ item.name }} file"
+    ansible.builtin.get_url:
+      url: " {{item.url }}"
+      dest: "{{ binary_installation_path }}/{{ item.name }}"
+    when:
+      - check_install.rc !=0
+      - not (item.is_compressed|default (false))
+
+  - name: "Download and uncompress {{item.name }} file"
+    unarchive:
+      src: "{{ item.url }} "
+      dest: "{{ binary_installation_path }}/{{ item.name }}"
+      remote_src: true
+    when:
+      - check_install.rc !=0
+      - (item.is_compressed|default (false))
+
+  - name: Make file executable
+    file:
+      path: "{{ binary_installation_path }}/{{ item.name }}"
+      mode: +x
+    when:
+      - check_install.rc !=0
+  when:
+  - not (item.clone|default (false))
+
+- name: "Install {{ item.name }} binary (clone)"
+  block:
+  - set_fact:
+      repo_details: "{{ item.url |split('/')| last }}"
+      when: check_install.rc !=0
+
+  - name: "Clone {{ item.name }} repo"
+    ansible.builtin.git:
+      repo: '{{ item.url }}'
+      dest: '{{ item.clone_path | default (ansible_env.HOME + "/." +  item.name) }}'
+      version: '{{ item.version | default(omit) }}'
+      depth: '{{ item.depth | default(omit) }}'
+    when:
+      - check_install.rc !=0
+
+  - name: Post install script (zshrc)
+    ansible.builtin.blockinfile:
+      path: "{{ ansible_env.HOME }}/.zshrc"
+      block: |
+        {{ item.post_install_script }}
+        {{ item.zsh_completions |default ('')}}
+    when:
+      - '"post_install_script" in item'
+      - check_install.rc !=0
+
+  - name: Post install script (bashrc)
+    ansible.builtin.blockinfile:
+      path: "{{ ansible_env.HOME }}/.bashrc"
+      block: |
+        {{ item.post_install_script }}
+        {{ item.bash_completions |default('') }}
+    when:
+      - '"post_install_script" in item'
+      - check_install.rc !=0
+  when:
+  - (item.clone|default (false))

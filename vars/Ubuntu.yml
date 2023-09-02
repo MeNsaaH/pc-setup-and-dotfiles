@@ -1,3 +1,5 @@
 fonts_dir: "{{ ansible_env.HOME }}/.fonts"
 iterm2_normal_font: "Monaco 12"
 iterm2_non_ascii_font: "MesloLGSNer-Regula 12"
+binary_installation_path: "{{ ansible_env.HOME }}/.local/bin"
+

@@ -135,5 +135,10 @@ export SDKMAN_DIR="/home/mensaah/.sdkman"
 [ ! -s /home/mensaah/.travis/travis.sh ] || source /home/mensaah/.travis/travis.sh
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[-f /usr/share/doc/fzf/examples/key-bindings.bash] && source /usr/share/doc/fzf/examples/key-bindings.bash
+[-f  /usr/share/doc/fzf/examples/completion.bash] && source /usr/share/doc/fzf/examples/completion.bash
 
 [[ -s "/home/mensaah/.gvm/scripts/gvm" ]] && source "/home/mensaah/.gvm/scripts/gvm"
+# BEGIN ANSIBLE MANAGED BLOCK
+export PATH="$HOME/.tfenv/bin:$PATH"
+# END ANSIBLE MANAGED BLOCK
