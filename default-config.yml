@@ -255,6 +255,7 @@ apt_packages:
   - gnome-shell-extensions
   - chrome-gnome-shell
   - xpad
+  - vim-gtk3
   - silversearcher-ag
   - name: sops
     url: https://github.com/getsops/sops/releases/latest/download/sops_3.7.3_amd64.deb
