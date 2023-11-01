@@ -18,6 +18,7 @@ dockitems_persist:
     pos: 11
 
 homebrew_installed_packages:
+  - age
   - aquasecurity/trivy/trivy
   - ansible-lint
   - argocd
@@ -32,6 +33,7 @@ homebrew_installed_packages:
   - composer
   - derailed/k9s/k9s
   - diff-so-fancy
+  - direnv
   - docker-credential-helper-ecr
   - duf
   - elixir
@@ -73,13 +75,14 @@ homebrew_installed_packages:
     install_options: ignore-dependencies # terraform is managed by tfenv
   - terraform-docs
   - terraformer
-  - name: terragrunt
-    install_options: ignore-dependencies # terraform is managed by tfenv
+#  - name: terragrunt
+#    install_options: ignore-dependencies # terraform is managed by tfenv
   - tfenv
   - tflint
   - tmux
   - tree
   - ubuntu/microk8s/microk8s
+  - warrensbox/tap/tgswitch
   - yq
   - ytt
 
@@ -105,6 +108,7 @@ homebrew_cask_apps:
   - lens
   - macvim
   - miro
+  - monitorcontrol
   - obs
   - openvpn-connect
   - pritunl
@@ -244,6 +248,8 @@ snap_packages:
   - insomnia
 
 apt_packages:
+  - age
+  - direnv
   - colordiff
   - fzf
   - htop

@@ -241,3 +241,4 @@ noremap <Leader>Y "+y
 noremap <Leader>P "+p
 
 
+let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all+accept'

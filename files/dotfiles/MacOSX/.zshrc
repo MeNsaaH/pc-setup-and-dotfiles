@@ -184,3 +184,16 @@ export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export GOROOT="$(brew --prefix golang)/libexec"
 export PATH=$PATH:$GOPATH/bin
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+#export PYENV_ROOT="$HOME/.pyenv"
+#command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+#eval "$(pyenv init -)"
+#eval "$(pyenv virtualenv-init -)"
+
+source "$HOME/.cargo/env"
+
+# NGROK Completions
+if command -v ngrok &>/dev/null; then
+  eval "$(ngrok completion)"
+fi
