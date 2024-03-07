@@ -13,6 +13,7 @@
   unstage = reset HEAD --
   last = log -1 HEAD
   cm = !git add . && git commit -m
+  cma = commit --amend -m
   cmm = commit -m
   pyclean = !find -v -iname \"*py[co]\"| xargs git rm --cached -rf
   a = add
@@ -52,6 +53,7 @@
   large-files="!git rev-list --objects --all | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' | sed -n 's/^blob //p' | sort --numeric-sort --key=2 | cut -c 1-12,41- | $(command -v gnumfmt || echo numfmt) --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest "
   prlog = "!f() { git log ${1:-develop}..HEAD --reverse --no-merges --pretty='---%n%n**%s** (%h)%n%n%b'; }; f"
   sync = "!git pull --rebase && git push"
+  t = "tag -s"
 
 [color]
   diff = auto
@@ -64,6 +66,9 @@
 
 [commit]
   gpgsign = true
+
+[tag]
+  gpgSign = true
 
 [gpg]
   program = gpg

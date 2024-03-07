@@ -172,3 +172,6 @@ export XDG_CONFIG_HOME=$HOME/.config
 # BEGIN ANSIBLE MANAGED BLOCK
 export PATH="$HOME/.tfenv/bin:$PATH"
 # END ANSIBLE MANAGED BLOCK
+
+# direnv
+eval "$(direnv hook zsh)"

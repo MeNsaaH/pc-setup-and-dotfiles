@@ -12,3 +12,5 @@ test-terraform/
 
 files-changed.txt
 *.bkp
+.envrc
+.direnv
