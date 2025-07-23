@@ -1,11 +1,11 @@
 [user]
   name = Mmadu Manasseh
-	signingkey = 8EED2EE211752102
+	signingkey = 43C8FF68070CF673
   email = mmadumanasseh@gmail.com
 
 [core]
   editor = vim
-	excludesfile = /Users/manassehmmadu/.gitignore
+	excludesfile = /Users/manasseh/.gitignore
 	autocrlf = input
 
 [alias]

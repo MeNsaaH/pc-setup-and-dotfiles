@@ -104,9 +104,6 @@
       when:
         - ansible_distribution == "MacOSX"
 
-    - import_tasks: tasks/extra-packages.yml
-      tags: ["extra-packages"]
-
     - name: Terraform setup
       block:
         - name: Check if Terraform is installed.
@@ -134,7 +131,7 @@
           environment:
             NVM_DIR: "{{ ansible_env.HOME }}/.nvm"
           shell:
-            executable: /bin/bash
+            executable: /bin/zsh
             cmd: |
               source $NVM_DIR/nvm.sh
               nvm install node
@@ -142,3 +139,5 @@
           when: which_node.rc != 0
       tags: ["node"]
 
+    - import_tasks: tasks/extra-packages.yml
+      tags: ["extra-packages"]

@@ -10,9 +10,9 @@ dockitems_remove:
   - Podcasts
   - "App Store"
 dockitems_persist:
-  - name: "Authy Desktop"
-    path: "/Applications/Authy Desktop.app/"
-    pos: 10
+  # - name: "Authy Desktop"
+  #   path: "/Applications/Authy Desktop.app/"
+  #   pos: 10
   - name: "Google Chrome"
     path: "/Applications/Google Chrome.app/"
     pos: 11
@@ -22,6 +22,7 @@ homebrew_installed_packages:
   - aquasecurity/trivy/trivy
   - ansible-lint
   - argocd
+  - asdf
   - autoconf
   - aws-vault
   - awscli
@@ -46,13 +47,14 @@ homebrew_installed_packages:
   - git-secrets
   - gitleaks
   - go
-  - google-cloud-sdk
+  # - google-cloud-sdk
   - goenv
   - gnu-tar
   - gnu-sed
   - gnupg
   - grpcurl
   - htop
+  - int128/kubelogin/kubelogin 
   - jq
   - kind
   - kops
@@ -62,7 +64,6 @@ homebrew_installed_packages:
   - kustomize
   - mercurial
   - minikube
-  - nvm
   - openjdk
   - podman
   - pre-commit
@@ -85,27 +86,30 @@ homebrew_installed_packages:
   - tree
   - ubuntu/microk8s/microk8s
   - warrensbox/tap/tgswitch
+  - virtualenvwrapper
+  - yamlfix
+  - yamllint
   - yq
   - ytt
 
 homebrew_taps:
-  - homebrew/core
-  - homebrew/cask
-  - homebrew/cask-fonts
+  # - homebrew/core
+  # - homebrew/cask
+  # - homebrew/cask-fonts
   - hashicorp/tap
   - vmware-tanzu/carvel
 
 homebrew_cask_appdir: /Applications
 homebrew_cask_apps:
-  - 1password
+  # - 1password
   - appcleaner
-  - authy
+  # - authy
   - cursor
   - docker
   - flycut
   - insomnia
   - iterm2
-  - google-chrome
+  # - google-chrome
   - joplin
   - keep
   - lastpass
@@ -118,13 +122,13 @@ homebrew_cask_apps:
   - openvpn-connect
   - pritunl
   - session-manager-plugin
-  - slack
+  # - slack
   - todoist
   - visual-studio-code
 #  - virtualbox
   - vlc
   - whatsapp
-  - zoom
+  # - zoom
 
 # See `geerlingguy.mas` role documentation for usage instructions.
 mas_installed_apps: []
@@ -151,10 +155,10 @@ npm_packages:
   - cspell
   - yarn
 
-pip_packages:
-  - virtualenvwrapper
-  - yamlfix
-  - yamllint
+pip_packages: []
+  # - virtualenvwrapper
+  # - yamlfix
+  # - yamllint
 
 # Glob pattern to ansible task files to run after all other tasks are finished.
 post_provision_tasks: []
@@ -173,11 +177,11 @@ kubectl_plugins:
   - cost
   - deprecations
   - df-pv
-  - doctor
+  # - doctor
   - foreach
   - get-all
   - iexec
-  - ingress-nginx
+  # - ingress-nginx
   - node-shell
   - neat
   - ns
@@ -211,6 +215,8 @@ zsh_plugins:
     repo: https://github.com/zsh-users/zsh-autosuggestions.git
   - name: zsh-syntax-highlighting
     repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+  - name: zsh-nvm
+    repo: https://github.com/lukechilds/zsh-nvm.git
 
 required_directories:
   - "{{ ansible_env.HOME }}/.nvm"
@@ -222,6 +228,7 @@ git:
   signingkey:
     "Manassehs-M1-MacBook-Pro": 8EED2EE211752102
     "Manasseh-Latitude-7420": 53F9E8F559F81BDA
+    "Manassehs-MacBook-Pro": 43C8FF68070CF673
 
 git_configs:
   - name: user.name

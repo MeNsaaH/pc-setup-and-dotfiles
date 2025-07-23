@@ -22,6 +22,9 @@
     dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/plugins/{{ item.name }}"
   loop: "{{ zsh_plugins }}"
 
+# - name: Source zshrc file
+#   ansible.builtin.shell: source {{ ansible_env.HOME }}/.zshrc
+
 - name: Set default shell
   ansible.builtin.user:
     name: "{{ ansible_env.USER }}"
