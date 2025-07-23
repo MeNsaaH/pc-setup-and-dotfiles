@@ -14,3 +14,5 @@ files-changed.txt
 *.bkp
 .envrc
 .direnv
+.gitattributes
+.gitattributes

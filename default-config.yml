@@ -51,6 +51,7 @@ homebrew_installed_packages:
   - gnu-tar
   - gnu-sed
   - gnupg
+  - grpcurl
   - htop
   - jq
   - kind
@@ -60,6 +61,7 @@ homebrew_installed_packages:
   - kubebuilder
   - kustomize
   - mercurial
+  - minikube
   - nvm
   - openjdk
   - podman
@@ -98,22 +100,26 @@ homebrew_cask_apps:
   - 1password
   - appcleaner
   - authy
+  - cursor
   - docker
   - flycut
   - insomnia
   - iterm2
   - google-chrome
   - joplin
+  - keep
   - lastpass
   - lens
   - macvim
   - miro
   - monitorcontrol
   - obs
+  - orbstack
   - openvpn-connect
   - pritunl
   - session-manager-plugin
   - slack
+  - todoist
   - visual-studio-code
 #  - virtualbox
   - vlc

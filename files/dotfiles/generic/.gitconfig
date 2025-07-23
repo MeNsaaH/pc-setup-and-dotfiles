@@ -12,9 +12,9 @@
   rank = shortlog -sn --no-merges
   unstage = reset HEAD --
   last = log -1 HEAD
-  cm = !git add . && git commit -m
-  cma = commit --amend -m
-  cmm = commit -m
+  cm = !git add . && git commit --signoff -m
+  cma = commit --signoff --amend -m
+  cmm = commit --signoff -m 
   pyclean = !find -v -iname \"*py[co]\"| xargs git rm --cached -rf
   a = add
   p = push
@@ -43,8 +43,8 @@
   uncommit = reset --mixed HEAD~
   l = log --graph --decorate --oneline --abbrev-commit --all
   h = log --graph --decorate --oneline --abbrev-commit
-  issues = !hub browse -- issues
-  url = "!f() { sha=$(git rev-parse ${1:-HEAD}); hub browse -u -- commit/$sha; }; f"
+  issues = !gh issue list
+  url = "!f() { sha=$(git rev-parse ${1:-HEAD}); gh browse -u -- commit/$sha; }; f"
   cb = "!git rev-parse --abbrev-ref HEAD | tr -d '\n' | pbcopy"
   remote-branches = "!f() { git ls-remote --heads ${1:origin} | sed 's?.*refs/heads/??'; }; f "
   alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
@@ -60,9 +60,6 @@
   status = auto
   branch = auto
   ui = true
-
-[credential]
-  helper = cache --timeout=36000000
 
 [commit]
   gpgsign = true
@@ -102,3 +99,13 @@
 
 [includeIf "hasconfig:remote.*.url:https://github.com/TykTechnologies/**"]
   path = ~/.gitprofiles/github-manasseh@tyk.io
+
+
+[url "ssh://git@github.com/"]
+  insteadOf = https://github.com/
+
+[credential]
+  helper = osxkeychain
+
+[diff "sopsdiffer"]
+	textconv = sops -d

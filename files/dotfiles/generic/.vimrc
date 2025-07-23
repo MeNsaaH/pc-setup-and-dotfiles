@@ -65,6 +65,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'pearofducks/ansible-vim'
 Plugin 'elixir-editors/vim-elixir'
 Plugin 'mg979/vim-visual-multi'
+Plugin 'rhadley-recurly/vim-terragrunt'
 
 
 " All of your Plugins must be added before the following line
@@ -242,3 +243,4 @@ noremap <Leader>P "+p
 
 
 let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all+accept'
+let g:hcl_fmt_autosave = 1

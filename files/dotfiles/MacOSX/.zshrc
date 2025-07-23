@@ -114,12 +114,6 @@ export EDITOR='vim'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '$HOME/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '$HOME/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/google-cloud-sdk/completion.zsh.inc'; fi
-
 ## PATHS
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH=$PATH:$HOME/google-cloud-sdk/bin
@@ -193,9 +187,23 @@ export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
 source "$HOME/.cargo/env"
 
-# NGROK Completions
+## NGROK Completions
 if command -v ngrok &>/dev/null; then
   eval "$(ngrok completion)"
 fi
 
 eval "$(direnv hook zsh)"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/manassehmmadu/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/manassehmmadu/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/manassehmmadu/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/manassehmmadu/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+. "$HOME/.asdf/asdf.sh"
+. "$HOME/.asdf/completions/asdf.bash"
+
+
+#export PYENV_ROOT="$HOME/.pyenv"
+#[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+#eval "$(pyenv init -)"
