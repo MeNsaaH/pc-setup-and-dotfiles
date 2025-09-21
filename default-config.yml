@@ -14,7 +14,7 @@ dockitems_persist:
   #   path: "/Applications/Authy Desktop.app/"
   #   pos: 10
   - name: "Google Chrome"
-    path: "/Applications/Google Chrome.app/"
+    path: '/Applications/Google Chrome.app/'
     pos: 11
 
 homebrew_installed_packages:
@@ -36,6 +36,7 @@ homebrew_installed_packages:
   - diff-so-fancy
   - direnv
   - docker-credential-helper-ecr
+  - dockutil
   - duf
   - elixir
   - fzf
@@ -68,6 +69,7 @@ homebrew_installed_packages:
   - podman
   - pre-commit
   - pyenv
+  - pyenv-virtualenv
   - rbenv
   - shellcheck
   - shfmt
@@ -109,7 +111,7 @@ homebrew_cask_apps:
   - flycut
   - insomnia
   - iterm2
-  # - google-chrome
+  - google-chrome
   - joplin
   - keep
   - lastpass
@@ -229,6 +231,8 @@ git:
     "Manassehs-M1-MacBook-Pro": 8EED2EE211752102
     "Manasseh-Latitude-7420": 53F9E8F559F81BDA
     "Manassehs-MacBook-Pro": 43C8FF68070CF673
+    "MacBook-Pro": 1BD2276E63407A9A # Personal M1 MacBook Pro
+    'Manassehs-MBP': 1BD2276E63407A9A # Personal
 
 git_configs:
   - name: user.name

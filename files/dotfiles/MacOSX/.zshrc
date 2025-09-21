@@ -201,8 +201,8 @@ if [ -f '/Users/manassehmmadu/Downloads/google-cloud-sdk/path.zsh.inc' ]; then .
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/manassehmmadu/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/manassehmmadu/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 
-. "$HOME/.asdf/asdf.sh"
-. "$HOME/.asdf/completions/asdf.bash"
+# Load asdf Shims
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 
 #export PYENV_ROOT="$HOME/.pyenv"

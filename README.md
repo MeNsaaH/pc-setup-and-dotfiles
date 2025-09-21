@@ -17,6 +17,8 @@ prerequisites
 ansible-galaxy install -r requirements.yml
 ```
 
+- Generate SSH Key and GPG Key and add to Github account
+
 - Run playbook
 ```
 ansible-playbook main.yml -i inventory --ask-become-pass
