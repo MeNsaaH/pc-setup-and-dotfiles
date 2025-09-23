@@ -174,3 +174,31 @@
               rustup default stable
           when: which_rust.rc != 0
       tags: ["rust"]
+    - name: Install ASDF and plugins
+      block:
+        - name: Check if asdf is installed.
+          shell: asdf --version
+          register: which_asdf
+          failed_when: no
+          changed_when: no
+        - name: get list of installed plugins
+          shell: asdf plugin list
+          register: asdf_installed_plugins
+          failed_when: no
+          changed_when: no
+          args:
+            executable: /bin/zsh
+          when: which_asdf.rc == 0
+        - name: Install {{ item.name }} asdf plugin
+          shell: |
+            source {{ ansible_env.HOME }}/.zshrc || true
+            asdf plugin add {{ item.name }} {{ item.repo | default('') }}
+            asdf install {{ item.name }} latest
+            asdf set -u {{ item.name }} latest
+          args:
+            executable: /bin/zsh
+          loop: "{{ asdf_plugins }}"
+          when:
+          - which_asdf.rc == 0
+          - item.name not in asdf_installed_plugins.stdout_lines
+      tags: ["asdf"]
