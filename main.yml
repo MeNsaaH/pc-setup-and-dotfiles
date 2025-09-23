@@ -202,3 +202,29 @@
           - which_asdf.rc == 0
           - item.name not in asdf_installed_plugins.stdout_lines
       tags: ["asdf"]
+    - name: Install gcloud components
+      block:
+        - name: Check if gcloud is installed.
+          shell: gcloud --version
+          register: which_gcloud
+          failed_when: no
+          changed_when: no
+        - name: List gcloud installed components
+          shell: gcloud components list --format="value(ID)" --filter="State=Installed"
+          register: gcloud_installed_components
+          failed_when: no
+          changed_when: no
+          args:
+            executable: /bin/zsh
+          when: which_gcloud.rc == 0
+        - name: Install gcloud components
+          shell: |
+            source {{ ansible_env.HOME }}/.zshrc || true
+            gcloud components install {{ item }} -q
+          args:
+            executable: /bin/zsh
+          loop: "{{ gcloud_components }}"
+          when:
+          - which_gcloud.rc == 0
+          - item not in gcloud_installed_components.stdout_lines
+      tags: ["gcloud"]

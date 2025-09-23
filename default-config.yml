@@ -48,7 +48,7 @@ homebrew_installed_packages:
   - git-secrets
   - gitleaks
   - go
-  # - google-cloud-sdk
+  - gcloud-cli
   - goenv
   - gnu-tar
   - gnu-sed
@@ -124,13 +124,13 @@ homebrew_cask_apps:
   - openvpn-connect
   - pritunl
   - session-manager-plugin
-  # - slack
+  - slack
   - todoist
   - visual-studio-code
 #  - virtualbox
   - vlc
   - whatsapp
-  # - zoom
+  - zoom
 
 # See `geerlingguy.mas` role documentation for usage instructions.
 mas_installed_apps: []
@@ -311,3 +311,6 @@ github_packages:
 asdf_plugins:
   - name: terragrunt
     repo: https://github.com/ohmer/asdf-terragrunt
+
+gcloud_components:
+  - gke-gcloud-auth-plugin
