@@ -116,6 +116,7 @@ export EDITOR='vim'
 
 
 ## PATHS
+export PATH="/opt/homebrew/bin/:$PATH"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH=$PATH:$HOME/google-cloud-sdk/bin
 
@@ -143,12 +144,6 @@ function pyclean {
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 
-# VirtualenvWrapper
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Devel
-export VIRTUALENVWRAPPER_PYTHON=$(which python3)
-source $(which virtualenvwrapper.sh)
-
 export KUBECTL_EXTERNAL_DIFF="colordiff -N -u"
 
 export NVM_DIR="$HOME/.nvm"
@@ -157,11 +152,8 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH="/usr/local/lib/ruby/gems/3.1.0/bin:/usr/local/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/3.1.0/bin:/opt/homebrew/opt/ruby/bin:$PATH"
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
-export PATH="/opt/homebrew/bin/:$PATH"
 export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/ruby/include -I/usr/local/opt/openjdk/include"
-
-
 
 # zlib
 #For compilers to find zlib you may need to set:
@@ -208,3 +200,9 @@ export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 #export PYENV_ROOT="$HOME/.pyenv"
 #[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 #eval "$(pyenv init -)"
+
+# VirtualenvWrapper
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Devel
+export VIRTUALENVWRAPPER_PYTHON=$(which python3)
+source $(which virtualenvwrapper.sh)

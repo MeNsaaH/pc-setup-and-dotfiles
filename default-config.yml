@@ -192,6 +192,7 @@ kubectl_plugins:
   - rbac-lookup
   - rolesum
   - score
+  - stern
   - tail
   - tree
   - who-can
