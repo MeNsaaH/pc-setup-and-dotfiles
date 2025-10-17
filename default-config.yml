@@ -71,6 +71,7 @@ homebrew_installed_packages:
   - pyenv
   - pyenv-virtualenv
   - rbenv
+  - ripgrep
   - shellcheck
   - shfmt
   - sops
@@ -84,6 +85,7 @@ homebrew_installed_packages:
 #    install_options: ignore-dependencies # terraform is managed by tfenv
   - tfenv
   - tflint
+  - the_silver_searcher
   - tmux
   - tree
   - ubuntu/microk8s/microk8s
@@ -119,6 +121,7 @@ homebrew_cask_apps:
   - macvim
   - miro
   - monitorcontrol
+  - nordvpn
   - obs
   - orbstack
   - openvpn-connect
@@ -184,6 +187,7 @@ kubectl_plugins:
   - get-all
   - iexec
   # - ingress-nginx
+  - kubeseal
   - node-shell
   - neat
   - ns
@@ -315,3 +319,7 @@ asdf_plugins:
 
 gcloud_components:
   - gke-gcloud-auth-plugin
+
+helm_plugins:
+  - https://github.com/jkroepke/helm-secrets
+  - https://github.com/helm-unittest/helm-unittest

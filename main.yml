@@ -228,3 +228,38 @@
           - which_gcloud.rc == 0
           - item not in gcloud_installed_components.stdout_lines
       tags: ["gcloud"]
+    - name: Install helm plugins
+      block:
+        - name: Check if helm is installed.
+          shell: helm version
+          register: which_helm
+          failed_when: no
+          changed_when: no
+        - name: Initialize installed plugins
+          set_fact:
+            installed_plugins: []
+          when: which_helm.rc == 0
+        - name: List installed helm plugins
+          shell: helm plugin list
+          register: helm_installed_plugins
+          failed_when: no
+          changed_when: no
+          args:
+            executable: /bin/zsh
+          when: which_helm.rc == 0
+        - name: Extract and store first column
+          set_fact:
+            installed_plugins: "{{ installed_plugins + [item.split()[0]] }}"
+          loop: "{{ helm_installed_plugins.stdout_lines[1:] }}"
+        - name: Install helm plugin {{ item }}
+          shell: |
+            source {{ ansible_env.HOME }}/.zshrc || true
+            helm plugin install {{ item }}
+          args:
+            executable: /bin/zsh
+          loop: "{{ helm_plugins }}"
+          when:
+          - which_helm.rc == 0
+          - helm_installed_plugins.stdout is defined
+          - item.split('/')[-1].replace('helm-', '') not in installed_plugins
+      tags: ["helm"]
