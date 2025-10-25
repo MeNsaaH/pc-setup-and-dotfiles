@@ -17,3 +17,6 @@ files-changed.txt
 .gitattributes
 .gitattributes
 .claude
+
+*.pyc
+__pycache__

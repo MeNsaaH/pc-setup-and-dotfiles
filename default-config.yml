@@ -26,10 +26,12 @@ homebrew_installed_packages:
   - autoconf
   - aws-vault
   - awscli
+  - aws-sam-cli
   - azure-cli
   - bash
   - bat
   - bfg
+  - colima
   - colordiff
   - composer
   - derailed/k9s/k9s
@@ -55,7 +57,7 @@ homebrew_installed_packages:
   - gnupg
   - grpcurl
   - htop
-  - int128/kubelogin/kubelogin 
+  - int128/kubelogin/kubelogin
   - jq
   - kind
   - kops
@@ -66,6 +68,7 @@ homebrew_installed_packages:
   - mercurial
   - minikube
   - openjdk
+  - pipx
   - podman
   - pre-commit
   - pyenv
@@ -242,6 +245,9 @@ git:
     "Manassehs-MacBook-Pro": 1BD2276E63407A9A 
     "MacBook-Pro": 1BD2276E63407A9A
     'Manassehs-MBP': 1BD2276E63407A9A
+    # M4 PC
+    'Manassehs-MBP-2': 43C8FF68070CF673
+
 
 git_configs:
   - name: user.name

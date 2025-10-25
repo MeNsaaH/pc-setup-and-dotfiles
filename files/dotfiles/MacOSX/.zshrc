@@ -143,7 +143,6 @@ function pyclean {
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-
 export KUBECTL_EXTERNAL_DIFF="colordiff -N -u"
 
 export NVM_DIR="$HOME/.nvm"
@@ -178,7 +177,7 @@ export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 #eval "$(pyenv init -)"
 #eval "$(pyenv virtualenv-init -)"
 
-source "$HOME/.cargo/env"
+#source "$HOME/.cargo/env"
 
 ## NGROK Completions
 if command -v ngrok &>/dev/null; then
@@ -195,6 +194,8 @@ if [ -f '/Users/manassehmmadu/Downloads/google-cloud-sdk/completion.zsh.inc' ]; 
 
 # Load asdf Shims
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+#. "$HOME/.asdf/asdf.sh"
+. "$HOME/.asdf/completions/_asdf"
 
 
 #export PYENV_ROOT="$HOME/.pyenv"
