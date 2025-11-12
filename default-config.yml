@@ -89,6 +89,7 @@ homebrew_installed_packages:
   - tfenv
   - tflint
   - the_silver_searcher
+  - tilt
   - tmux
   - tree
   - ubuntu/microk8s/microk8s
