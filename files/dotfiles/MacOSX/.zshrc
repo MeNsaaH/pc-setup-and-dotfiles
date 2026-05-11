@@ -151,8 +151,8 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH="/usr/local/lib/ruby/gems/3.1.0/bin:/usr/local/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/3.1.0/bin:/opt/homebrew/opt/ruby/bin:$PATH"
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
-export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/ruby/include -I/usr/local/opt/openjdk/include"
+#export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
+#export CPPFLAGS="-I/opt/homebrew/opt/ruby/include -I/usr/local/opt/openjdk/include"
 
 # zlib
 #For compilers to find zlib you may need to set:
@@ -207,3 +207,5 @@ export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
 export VIRTUALENVWRAPPER_PYTHON=$(which python3)
 source $(which virtualenvwrapper.sh)
+
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi

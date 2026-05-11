@@ -20,3 +20,6 @@ files-changed.txt
 
 *.pyc
 __pycache__
+
+# git worktrees
+.worktrees

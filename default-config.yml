@@ -120,9 +120,10 @@ homebrew_cask_apps:
   - google-chrome
   - joplin
   - keep
+  - karabiner-elements
   - lastpass
   - lens
-  - macvim
+  # - macvim
   - miro
   - monitorcontrol
   - nordvpn
