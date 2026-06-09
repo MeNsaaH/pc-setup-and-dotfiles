@@ -1,3 +1,9 @@
+# The default root path for Ansible config files on the controller
+.ansible/
+
+# Retry files generated for failed Ansible playbook runs
+*.retry
+
 # VIM Swap files
 *.swp
 *.swo

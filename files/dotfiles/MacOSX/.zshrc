@@ -209,3 +209,4 @@ export VIRTUALENVWRAPPER_PYTHON=$(which python3)
 source $(which virtualenvwrapper.sh)
 
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+export ZAPIER_TF_MCP_AUTH_TOKEN=$(security find-generic-password -a "$USER" -s "ZAPIER_TERRAFORM_MCP_TOKEN" -w 2>/dev/null)

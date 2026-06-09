@@ -106,12 +106,14 @@ homebrew_taps:
   # - homebrew/cask-fonts
   - hashicorp/tap
   - vmware-tanzu/carvel
+  - manaflow-ai/cmux
 
 homebrew_cask_appdir: /Applications
 homebrew_cask_apps:
   # - 1password
   - appcleaner
   # - authy
+  - cmux
   - cursor
   - docker
   - flycut

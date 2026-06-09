@@ -1,0 +1,5 @@
+scrollback-limit = 50000000
+theme = Monokai Classic
+font-thicken = true
+font-family = "MonacoLigaturized"
+
