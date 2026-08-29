@@ -1,11 +1,11 @@
 [user]
   name = Mmadu Manasseh
-	signingkey = 43C8FF68070CF673
+	signingkey = 1BD2276E63407A9A
   email = mmadumanasseh@gmail.com
 
 [core]
-  editor = vim
-	excludesfile = /Users/manasseh/.gitignore
+	editor = cat
+	excludesfile = ~/.config/git/ignore
 	autocrlf = input
 
 [alias]
@@ -55,6 +55,7 @@
   sync = "!git pull --rebase && git push"
   t = "tag -s"
   upm ="!f() { branch=$(basename $(git symbolic-ref refs/remotes/origin/HEAD)); git fetch origin $branch; wt=$(git worktree list --porcelain | awk -v br=\"refs/heads/$branch\" '/^worktree/{wt=$2} /^branch /{if ($2==br) print wt}'); if [ -n \"$wt\" ]; then git -C \"$wt\" merge --ff-only origin/$branch; else git branch -f $branch origin/$branch; fi; }; f"
+  house-keeping = "!sh ~/.config/git/house-keeping.sh"
 
 [color]
   diff = auto
@@ -63,43 +64,43 @@
   ui = true
 
 [commit]
-  gpgsign = true
+	gpgsign = false
 
 [tag]
   gpgSign = true
 
 [gpg]
-  program = gpg
+	program = 
 
 [init]
 	defaultBranch = main
 
 [includeIf "gitdir:/Users/manassehmmadu/Codes/gitlab/MeNsaaH/"]
-  path = ~/.gitprofiles/gitlab-mmadumanasseh@gmail.com
+  path = ~/.config/git/gitprofiles/gitlab-mmadumanasseh@gmail.com
 
 [includeIf "hasconfig:remote.*.url:git@github.com:zapier/**"]
-  path = ~/.gitprofiles/github-manasseh.mmadu@zapier.com
+  path = ~/.config/git/gitprofiles/github-manasseh.mmadu@zapier.com
 
 [includeIf "hasconfig:remote.*.url:https://github.com/zapier/**"]
-  path = ~/.gitprofiles/github-manasseh.mmadu@zapier.com
+  path = ~/.config/git/gitprofiles/github-manasseh.mmadu@zapier.com
 
 [includeIf "hasconfig:remote.*.url:git@gitlab.com:zapier/**"]
-  path = ~/.gitprofiles/gitlab-manasseh.mmadu@zapier.com
+  path = ~/.config/git/gitprofiles/gitlab-manasseh.mmadu@zapier.com
 
 [includeIf "hasconfig:remote.*.url:https://gitlab.com/zapier/**"]
-  path = ~/.gitprofiles/gitlab-manasseh.mmadu@zapier.com
+  path = ~/.config/git/gitprofiles/gitlab-manasseh.mmadu@zapier.com
 
 [includeIf "hasconfig:remote.*.url:git@github.com:oviceinc/**"]
-  path = ~/.gitprofiles/github-mmmadu@ovice.co
+  path = ~/.config/git/gitprofiles/github-mmmadu@ovice.co
 
 [includeIf "hasconfig:remote.*.url:https://github.com/oviceinc/**"]
-  path = ~/.gitprofiles/github-mmmadu@ovice.co
+  path = ~/.config/git/gitprofiles/github-mmmadu@ovice.co
 
 [includeIf "hasconfig:remote.*.url:git@github.com:TykTechnologies/**"]
-  path = ~/.gitprofiles/github-manasseh@tyk.io
+  path = ~/.config/git/gitprofiles/github-manasseh@tyk.io
 
 [includeIf "hasconfig:remote.*.url:https://github.com/TykTechnologies/**"]
-  path = ~/.gitprofiles/github-manasseh@tyk.io
+  path = ~/.config/git/gitprofiles/github-manasseh@tyk.io
 
 
 [url "ssh://git@github.com/"]
@@ -112,6 +113,6 @@
 	textconv = sops -d
 # The contents of this file are included only for GitLab.com URLs
 ;[includeIf "hasconfig:remote.*.url:git@gitlab.com:zapier/**"]
-;  path = ~/.gitconfig-zapier-gitlab
+;  path = ~/.config/git/gitprofiles/gitlab-manasseh.mmadu@zapier.com
 ;[includeIf "hasconfig:remote.*.url:https://gitlab.com/zapier/**"]
-;  path = ~/.gitconfig-zapier-gitlab
+;  path = ~/.config/git/gitprofiles/gitlab-manasseh.mmadu@zapier.com

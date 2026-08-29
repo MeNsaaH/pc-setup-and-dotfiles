@@ -34,6 +34,7 @@ homebrew_installed_packages:
   - colima
   - colordiff
   - composer
+  - cosign
   - derailed/k9s/k9s
   - diff-so-fancy
   - direnv
@@ -81,12 +82,13 @@ homebrew_installed_packages:
   - telnet
   - name: terraform
     state: absent
-    install_options: ignore-dependencies # terraform is managed by tfenv
+    install_options: ignore-dependencies # terraform is managed by tenv
   - terraform-docs
   - terraformer
-#  - name: terragrunt
-#    install_options: ignore-dependencies # terraform is managed by tfenv
-  - tfenv
+  - name: terragrunt
+    state: absent
+    install_options: ignore-dependencies # terraform is managed by tenv
+  - tenv
   - tflint
   - the_silver_searcher
   - tilt
@@ -261,7 +263,7 @@ git_configs:
   - name: user.signingkey
     value: "{{ git.signingkey[ansible_hostname] }}"
   - name: core.excludesfile
-    value: "{{ ansible_env.HOME }}/.gitignore"
+    value: "{{ ansible_env.HOME }}/.config/git/ignore"
 
 snap_packages:
   - name: aws-cli
@@ -314,18 +316,9 @@ apt_packages:
 github_packages:
   - name: argocd
     url: "https://github.com/argoproj/argo-cd/releases/latest/download/argocd-{{ (ansible_os_family|lower == 'debian') | ternary('linux', (ansible_os_family|lower)) }}-{{ (ansible_architecture == 'x86_64') | ternary('amd64', ansible_architecture) }}"
-  - name: tfenv
-    url: https://github.com/tfutils/tfenv.git
-    clone: true
-    depth: 1
-    post_install_script: 'export PATH="$HOME/.tfenv/bin:$PATH"'
-    bash_completions: ""
-    zsh_completions: ""
 
 
-asdf_plugins:
-  - name: terragrunt
-    repo: https://github.com/ohmer/asdf-terragrunt
+asdf_plugins: []
 
 gcloud_components:
   - gke-gcloud-auth-plugin

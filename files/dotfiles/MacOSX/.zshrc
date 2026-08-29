@@ -210,3 +210,24 @@ source $(which virtualenvwrapper.sh)
 
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
 export ZAPIER_TF_MCP_AUTH_TOKEN=$(security find-generic-password -a "$USER" -s "ZAPIER_TERRAFORM_MCP_TOKEN" -w 2>/dev/null)
+
+# OpenClaw Completion
+source "/Users/manasseh/.openclaw/completions/openclaw.zsh"
+
+# opencode
+export PATH=/Users/manasseh/.opencode/bin:$PATH
+
+# pnpm
+export PNPM_HOME="/Users/manasseh/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# Added by Antigravity
+export PATH="/Users/manasseh/.antigravity/antigravity/bin:$PATH"
+
+# Added by Antigravity IDE
+export PATH="/Users/manasseh/.antigravity-ide/antigravity-ide/bin:$PATH"
+source $HOME/.tenv.completion.zsh

@@ -38,10 +38,38 @@
       become: true
       tags: ["system-packages"]
 
+    - name: Ensure XDG config directory exists
+      file:
+        state: directory
+        path: "{{ ansible_env.HOME }}/.config"
+      tags: ["dotfiles", "git"]
+
+    - name: Link Git config directory
+      file:
+        state: link
+        force: yes
+        src: "{{ playbook_dir }}/files/dotfiles/generic/.config/git"
+        dest: "{{ ansible_env.HOME }}/.config/git"
+      tags: ["dotfiles", "git"]
+
+    - name: Link legacy global Git config paths
+      file:
+        state: link
+        force: yes
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop:
+        - src: "{{ ansible_env.HOME }}/.config/git/config"
+          dest: "{{ ansible_env.HOME }}/.gitconfig"
+        - src: "{{ ansible_env.HOME }}/.config/git/ignore"
+          dest: "{{ ansible_env.HOME }}/.gitignore"
+      tags: ["dotfiles", "git"]
+
     - name: Git Config
       community.general.git_config:
         name: "{{ item.name }}"
-        scope: global
+        scope: file
+        file: "{{ ansible_env.HOME }}/.config/git/config"
         value: "{{ item.value }}"
       loop: "{{ git_configs }}"
       tags: ["git"]
@@ -111,12 +139,13 @@
           register: which_terraform
           failed_when: no
           changed_when: no
-        - name: Install terraform versions using tfenv
+        - name: Install terraform versions using tenv
           shell:
             executable: /bin/bash
             cmd: |
-              tfenv install latest
-              tfenv use latest
+              tenv tf install
+              tenv tg install
+              tenv tofu install
           when: which_terraform.rc != 0
       tags: ["terraform"]
 
