@@ -15,3 +15,8 @@
 test.py
 test-terraform/
 system-specific-config.yml
+
+# Machine-specific git config
+files/dotfiles/generic/.config/git/local
+files/dotfiles/generic/.config/git/gitprofiles/*
+!files/dotfiles/generic/.config/git/gitprofiles/.gitkeep

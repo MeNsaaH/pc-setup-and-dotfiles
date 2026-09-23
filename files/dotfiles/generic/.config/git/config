@@ -75,6 +75,10 @@
 [init]
 	defaultBranch = main
 
+# Machine-specific overrides (signing key etc.); missing file is ignored
+[include]
+  path = ~/.config/git/local
+
 [includeIf "gitdir:/Users/manassehmmadu/Codes/gitlab/MeNsaaH/"]
   path = ~/.config/git/gitprofiles/gitlab-mmadumanasseh@gmail.com
 
