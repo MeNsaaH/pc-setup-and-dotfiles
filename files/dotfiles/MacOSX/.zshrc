@@ -231,3 +231,6 @@ export PATH="/Users/manasseh/.antigravity/antigravity/bin:$PATH"
 # Added by Antigravity IDE
 export PATH="/Users/manasseh/.antigravity-ide/antigravity-ide/bin:$PATH"
 source $HOME/.tenv.completion.zsh
+
+# kimi-code
+export PATH="/Users/manasseh/.kimi-code/bin:$PATH"
