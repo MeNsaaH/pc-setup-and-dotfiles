@@ -141,6 +141,9 @@
     ]
   },
   "model": "{{ agent_config.models.claude }}",
+{% if agent_config.claude_model_settings %}
+  "modelSettings": {{ agent_config.claude_model_settings | to_nice_json }},
+{% endif %}
   "theme": "dark",
   "voice": {"mode": "hold", "autoSubmit": true},
   "voiceEnabled": true,

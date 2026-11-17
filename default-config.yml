@@ -361,6 +361,7 @@ agent_config:
 
   # Extra roots allowed for reads, and the marketplace/plugin pairs to install.
   claude_permission_paths: []
+  claude_model_settings: {}
   claude_marketplaces: []
   claude_plugins: []
   codex_plugins: []
