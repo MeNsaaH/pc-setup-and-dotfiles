@@ -257,6 +257,10 @@ export PATH="/Users/manasseh/.kimi-code/bin:$PATH"
 export AI_GATEWAY_API_KEY="$(/usr/bin/security find-generic-password -s 'Vercel AI Gateway' -a 'vercel-ai-gateway' -w 2>/dev/null)"
 # <<< vercel ai-gateway <<<
 
+# Machine-only settings: internal hostnames and work tokens, which must not
+# ship in this public repo. Create ~/.config/zsh/work.zsh with mode 0600.
+[ -f "$HOME/.config/zsh/work.zsh" ] && source "$HOME/.config/zsh/work.zsh"
+
 # from_secrets, for .envrc files.
 [ -f "$HOME/.config/direnv/direnvrc" ] && source "$HOME/.config/direnv/direnvrc"
 
