@@ -186,6 +186,24 @@ fi
 
 eval "$(direnv hook zsh)"
 
+# direnv: do not auto-load on cd. Entering a directory loads nothing, so no
+# keychain unlock dialog fires on a directory change and nothing is handed to
+# child processes by accident. Load explicitly with `direnv-load`.
+# The hook below only runs direnv when you LEAVE a loaded directory, which is
+# what unloads the variables again.
+# Note: direnv does not set DIRENV_SHELL, so the target shell is named here.
+_direnv_hook() {
+  local trap_status=$?
+  if [ -n "$DIRENV_DIR" ]; then
+    local loaded_dir="${DIRENV_DIR#-}"
+    if [[ "$PWD" != "$loaded_dir" && "$PWD" != "$loaded_dir"/* ]]; then
+      eval "$(direnv export zsh)"
+    fi
+  fi
+  return $trap_status
+}
+alias direnv-load='eval "$(direnv export zsh)"'
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/manassehmmadu/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/manassehmmadu/Downloads/google-cloud-sdk/path.zsh.inc'; fi
 
@@ -209,10 +227,9 @@ export VIRTUALENVWRAPPER_PYTHON=$(which python3)
 source $(which virtualenvwrapper.sh)
 
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
-export ZAPIER_TF_MCP_AUTH_TOKEN=$(security find-generic-password -a "$USER" -s "ZAPIER_TERRAFORM_MCP_TOKEN" -w 2>/dev/null)
 
 # OpenClaw Completion
-source "/Users/manasseh/.openclaw/completions/openclaw.zsh"
+# source "/Users/manasseh/.openclaw/completions/openclaw.zsh"
 
 # opencode
 export PATH=/Users/manasseh/.opencode/bin:$PATH
@@ -234,3 +251,13 @@ source $HOME/.tenv.completion.zsh
 
 # kimi-code
 export PATH="/Users/manasseh/.kimi-code/bin:$PATH"
+
+# >>> vercel ai-gateway >>>
+# Managed by `vercel ai-gateway setup` — safe to remove this block.
+export AI_GATEWAY_API_KEY="$(/usr/bin/security find-generic-password -s 'Vercel AI Gateway' -a 'vercel-ai-gateway' -w 2>/dev/null)"
+# <<< vercel ai-gateway <<<
+
+# from_secrets, for .envrc files.
+[ -f "$HOME/.config/direnv/direnvrc" ] && source "$HOME/.config/direnv/direnvrc"
+
+export OP_BIOMETRIC_UNLOCK_ENABLED=true

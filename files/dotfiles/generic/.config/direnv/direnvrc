@@ -1,0 +1,71 @@
+# shellcheck shell=bash
+#
+# Environment-variable secrets, read through `secrets`: a TTL cache in the
+# login keychain, encrypted by the Secure Enclave. Build it once per Mac from
+# ~/.config/secrets (see the header of secrets.swift):
+#
+#   swiftc -O -o ~/.local/bin/secrets ~/.config/secrets/secrets.swift
+#   codesign --force --sign - ~/.local/bin/secrets
+#
+#   from_secrets VAR [ref|field]
+#
+# field defaults to VAR and is appended to $SECRETS_DEFAULT_REF. A second
+# argument containing "://" is used as a complete reference, so a checkout can
+# name its source directly:
+#
+#   SECRETS_DEFAULT_REF="op://Employee/CLI tokens"      # 1Password
+#   SECRETS_DEFAULT_REF="lpass://Shared/GitHub"         # LastPass
+#
+#   se-cache read <ref> --ttl  refresh the cache lifetime
+#   secrets list             what is cached, and for how much longer
+#   secrets clear [ref]      drop one entry, or all of them
+#   secrets read <ref> --ttl  refresh the cache lifetime
+#
+# direnv can only export variables, so the plaintext is visible to child
+# processes exactly as before. What changes is where it lives at rest: the
+# source is queried at most once per TTL (default 300s), and the cache holds
+# ciphertext that only this Mac's Secure Enclave can open.
+#
+# A failed or empty read leaves the variable UNSET with a loud error.
+
+# log_error comes from the direnv stdlib and is absent when this file is
+# sourced from ~/.zshrc.
+if ! type log_error >/dev/null 2>&1; then
+  log_error() { printf '%s\n' "$*" >&2; }
+fi
+
+from_secrets() {
+  local var="$1" field="${2:-$1}" ref val
+  if [ -z "$var" ]; then
+    log_error "from_secrets: usage: from_secrets VAR [ref|field]"
+    return 1
+  fi
+  case "$field" in
+    *://*) ref="$field" ;;
+    *)
+      if [ -z "${SECRETS_DEFAULT_REF:-}" ]; then
+        log_error "from_secrets: '$field' is a bare name and SECRETS_DEFAULT_REF is unset"
+        log_error "from_secrets: set it to a scheme://prefix, e.g. op://Vault/Item"
+        return 1
+      fi
+      ref="${SECRETS_DEFAULT_REF%/}/$field"
+      ;;
+  esac
+  if ! command -v secrets >/dev/null 2>&1; then
+    log_error "from_secrets: secrets not on PATH; \$$var left unset"
+    log_error "from_secrets: build it from ~/.config/secrets/secrets.swift"
+    return 1
+  fi
+  val="$(secrets read "$ref")" || {
+    log_error "from_secrets: could not read '$ref'; \$$var left unset"
+    return 1
+  }
+  if [ -z "$val" ]; then
+    log_error "from_secrets: '$ref' is empty; \$$var left unset"
+    return 1
+  fi
+  export "$var=$val"
+}
+
+# The pre-secrets name, so existing .envrc files keep loading.
+from_se_cache() { from_secrets "$@"; }
