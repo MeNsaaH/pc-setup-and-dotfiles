@@ -79,7 +79,7 @@
 [include]
   path = ~/.config/git/local
 
-[includeIf "gitdir:/Users/manassehmmadu/Codes/gitlab/MeNsaaH/"]
+[includeIf "gitdir:~/Codes/gitlab/MeNsaaH/"]
   path = ~/.config/git/gitprofiles/gitlab-mmadumanasseh@gmail.com
 
 [includeIf "hasconfig:remote.*.url:git@github.com:zapier/**"]

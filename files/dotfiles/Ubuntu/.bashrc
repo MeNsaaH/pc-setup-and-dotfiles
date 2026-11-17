@@ -128,17 +128,17 @@ export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/mensaah/.sdkman"
-[[ -s "/home/mensaah/.sdkman/bin/sdkman-init.sh" ]] && source "/home/mensaah/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # added by travis gem
-[ ! -s /home/mensaah/.travis/travis.sh ] || source /home/mensaah/.travis/travis.sh
+[ ! -s "$HOME/.travis/travis.sh" ] || source "$HOME/.travis/travis.sh"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [ -f /usr/share/doc/fzf/examples/key-bindings.bash ] && source /usr/share/doc/fzf/examples/key-bindings.bash
 [ -f  /usr/share/doc/fzf/examples/completion.bash ] && source /usr/share/doc/fzf/examples/completion.bash
 
-[[ -s "/home/mensaah/.gvm/scripts/gvm" ]] && source "/home/mensaah/.gvm/scripts/gvm"
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 # BEGIN ANSIBLE MANAGED BLOCK
 export PATH="$HOME/.tfenv/bin:$PATH"
 # END ANSIBLE MANAGED BLOCK

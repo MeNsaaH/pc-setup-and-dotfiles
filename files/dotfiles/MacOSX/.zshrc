@@ -205,10 +205,10 @@ _direnv_hook() {
 alias direnv-load='eval "$(direnv export zsh)"'
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/manassehmmadu/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/manassehmmadu/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f "$HOME/Downloads/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/Downloads/google-cloud-sdk/path.zsh.inc"; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/manassehmmadu/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/manassehmmadu/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc"; fi
 
 # Load asdf Shims
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
@@ -229,13 +229,13 @@ source $(which virtualenvwrapper.sh)
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
 
 # OpenClaw Completion
-# source "/Users/manasseh/.openclaw/completions/openclaw.zsh"
+# source "$HOME/.openclaw/completions/openclaw.zsh"
 
 # opencode
-export PATH=/Users/manasseh/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
 
 # pnpm
-export PNPM_HOME="/Users/manasseh/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -243,19 +243,14 @@ esac
 # pnpm end
 
 # Added by Antigravity
-export PATH="/Users/manasseh/.antigravity/antigravity/bin:$PATH"
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
 # Added by Antigravity IDE
-export PATH="/Users/manasseh/.antigravity-ide/antigravity-ide/bin:$PATH"
+export PATH="$HOME/.antigravity-ide/antigravity-ide/bin:$PATH"
 source $HOME/.tenv.completion.zsh
 
 # kimi-code
-export PATH="/Users/manasseh/.kimi-code/bin:$PATH"
-
-# >>> vercel ai-gateway >>>
-# Managed by `vercel ai-gateway setup` — safe to remove this block.
-export AI_GATEWAY_API_KEY="$(/usr/bin/security find-generic-password -s 'Vercel AI Gateway' -a 'vercel-ai-gateway' -w 2>/dev/null)"
-# <<< vercel ai-gateway <<<
+export PATH="$HOME/.kimi-code/bin:$PATH"
 
 # Machine-only settings: internal hostnames and work tokens, which must not
 # ship in this public repo. Create ~/.config/zsh/work.zsh with mode 0600.
