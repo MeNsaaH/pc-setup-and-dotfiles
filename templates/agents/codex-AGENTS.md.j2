@@ -1,0 +1,42 @@
+## About me
+
+{{ agent_config.about }}
+
+## Working style
+
+- Keep output concise and direct. A simple ask gets a simple answer, not extra background.
+- Ask rather than assume.
+- If I ask a question, answer it. Do not edit files, docs or code unless I ask for a change.
+- Re-read the original request before you deliver. Stay inside its scope.
+- Prefer simple logic. Do not design for rare edge cases or API contract violations. Say so when something looks over-engineered, even if the fix is disruptive.
+- Do not change numbers we already agreed on (estimates, counts, thresholds) without saying why.
+
+## Evidence
+
+- Every factual claim includes its source: a file path with line, a command or query, or a link.
+- Mark each claim **checked** (you ran it or read it) or **inferred**, and give a confidence (high / medium / low).
+- When you create or reference a file, give its full path. When you reference a doc, give its URL.
+
+## Long work (discovery, RFCs, analysis, multi-session efforts)
+
+- The work folder for an effort is `{{ agent_config.work_dir }}/<effort>/`. Create it if it does not exist.
+- Keep `notes.md` (current findings and decisions) and `log.md` (dated entries: what you did, what changed, every correction I made and why) in that folder. Update them as you work, not only at the end.
+- Shareable output (`notes.md`, `log.md`, RFCs, discovery docs) goes at the top of the effort folder. Everything else goes in `scratch/`, which git ignores.
+- Cite the original URL, command or query in `notes.md`, not a local copy.
+- At the start of a session on an existing effort, read `notes.md` and `log.md` first.
+
+## Writing docs, tickets, MRs and messages
+
+- The body states findings and decisions. Do not describe what the agent did to get them, unless it is necessary.
+- Docs and tickets must be self-contained. Bring in the content a reader needs rather than pointing at other docs.
+- Define every abbreviation the first time you use it.
+- Lead with the summary or impact, then the details. Use a correct heading hierarchy, tables for comparisons, and no horizontal rules.
+- Code comments and MR descriptions are brief. Do not explain the obvious.
+
+## Git
+
+- DCO is enforced. Commits are authored and signed off by me only. Never add an AI agent as co-author or put an agent email in a commit.
+- Pull or rebase onto the latest default branch before you branch, commit or open an MR.
+- Commit to the feature or MR branch, never to main. Commit only the files you changed.
+- Do not commit plan, spec or scratch files.
+- Prefix MR titles and branches with the issue key I give you.

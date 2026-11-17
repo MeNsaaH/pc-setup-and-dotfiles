@@ -1,0 +1,18 @@
+# omp provider and model catalogue. Rendered by the dotfiles playbook; see README.md.
+providers:
+{% if agent_config.omp_provider.base_url %}
+   {{ agent_config.omp_provider.name }}:
+      baseUrl: {{ agent_config.omp_provider.base_url }}
+      apiKey: {{ agent_config.omp_provider.api_key_env }}
+      api: {{ agent_config.omp_provider.api | default('anthropic-messages') }}
+      models:
+{% for m in agent_config.omp_models %}
+         - id: {{ m.id }}
+           name: {{ m.name }}
+{% if m.reasoning is defined %}           reasoning: {{ 'true' if m.reasoning else 'false' }}
+{% endif %}{% if m.input is defined %}           input: [{{ m.input | join(', ') }}]
+{% endif %}{% if m.cost is defined %}           cost: { input: {{ m.cost.input }}, output: {{ m.cost.output }}, cacheRead: {{ m.cost.cache_read | default(m.cost.input) }}, cacheWrite: {{ m.cost.cache_write | default(0) }} }
+{% endif %}{% if m.context_window is defined %}           contextWindow: {{ m.context_window }}
+{% endif %}{% if m.max_tokens is defined %}           maxTokens: {{ m.max_tokens }}
+{% endif %}{% endfor %}
+{% endif %}

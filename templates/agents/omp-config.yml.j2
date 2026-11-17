@@ -1,0 +1,267 @@
+setupVersion: 3
+{% if agent_config.omp_enabled_providers %}
+enabledProviders:
+{% for p in agent_config.omp_enabled_providers %}
+  - {{ p }}
+{% endfor %}{% endif %}
+{% if agent_config.models.omp_default %}
+modelRoles:
+{% if agent_config.models.omp_slow %}
+  slow: {{ agent_config.models.omp_slow }}
+{% endif %}
+{% if agent_config.models.omp_small %}
+  smol: {{ agent_config.models.omp_small }}
+{% endif %}
+{% if agent_config.models.omp_vision %}
+  vision: {{ agent_config.models.omp_vision }}
+{% endif %}
+  default: {{ agent_config.models.omp_default }}
+{% endif %}
+{% if agent_config.omp_extensions %}
+extensions:
+{% for e in agent_config.omp_extensions %}
+  - {{ e }}
+{% endfor %}{% endif %}
+tools:
+  approvalMode: yolo
+  approval:
+    mcp__pagerduty_mcp_server_create_alert_grouping_setting: prompt
+    mcp__pagerduty_mcp_server_update_alert_grouping_setting: prompt
+    mcp__pagerduty_mcp_server_delete_alert_grouping_setting: prompt
+    mcp__pagerduty_mcp_server_create_incident: prompt
+    mcp__pagerduty_mcp_server_manage_incidents: prompt
+    mcp__pagerduty_mcp_server_add_responders: prompt
+    mcp__pagerduty_mcp_server_add_note_to_incident: prompt
+    mcp__pagerduty_mcp_server_start_incident_workflow: prompt
+    mcp__pagerduty_mcp_server_create_service: prompt
+    mcp__pagerduty_mcp_server_update_service: prompt
+    mcp__pagerduty_mcp_server_create_team: prompt
+    mcp__pagerduty_mcp_server_update_team: prompt
+    mcp__pagerduty_mcp_server_delete_team: prompt
+    mcp__pagerduty_mcp_server_add_team_member: prompt
+    mcp__pagerduty_mcp_server_remove_team_member: prompt
+    mcp__pagerduty_mcp_server_create_schedule: prompt
+    mcp__pagerduty_mcp_server_update_schedule: prompt
+    mcp__pagerduty_mcp_server_create_schedule_override: prompt
+    mcp__pagerduty_mcp_server_delete_schedule_v3: prompt
+    mcp__pagerduty_mcp_server_create_schedule_v3_rotation: prompt
+    mcp__pagerduty_mcp_server_delete_schedule_v3_rotation: prompt
+    mcp__pagerduty_mcp_server_create_schedule_v3_rotation_event: prompt
+    mcp__pagerduty_mcp_server_update_schedule_v3_rotation_event: prompt
+    mcp__pagerduty_mcp_server_delete_schedule_v3_rotation_event: prompt
+    mcp__pagerduty_mcp_server_create_schedule_v3_custom_shifts: prompt
+    mcp__pagerduty_mcp_server_update_schedule_v3_custom_shift: prompt
+    mcp__pagerduty_mcp_server_delete_schedule_v3_custom_shift: prompt
+    mcp__pagerduty_mcp_server_create_schedule_v3_overrides: prompt
+    mcp__pagerduty_mcp_server_update_schedule_v3_override: prompt
+    mcp__pagerduty_mcp_server_delete_schedule_v3_override: prompt
+    mcp__pagerduty_mcp_server_update_event_orchestration_router: prompt
+    mcp__pagerduty_mcp_server_append_event_orchestration_router_rule: prompt
+    mcp__pagerduty_mcp_server_create_status_page_post: prompt
+    mcp__pagerduty_mcp_server_create_status_page_post_update: prompt
+    mcp__pagerduty_mcp_server_create_user: prompt
+    mcp__pagerduty_mcp_server_create_webhook_subscription: prompt
+    mcp__pagerduty_mcp_server_update_webhook_subscription: prompt
+    mcp__pagerduty_mcp_server_delete_webhook_subscription: prompt
+    mcp__slack_send_message: deny
+    mcp__slack_send_message_draft: deny
+    mcp__slack_schedule_message: deny
+    mcp__slack_add_reaction: deny
+    mcp__slack_create_canvas: deny
+    mcp__slack_update_canvas: deny
+    mcp__slack_slack_slack_send_message: deny
+    mcp__slack_slack_slack_send_message_draft: deny
+    mcp__slack_slack_slack_schedule_message: deny
+    mcp__slack_slack_slack_add_reaction: deny
+    mcp__slack_slack_slack_create_canvas: deny
+    mcp__slack_slack_slack_update_canvas: deny
+    mcp__vercel_accept_project_transfer_request: deny
+    mcp__vercel_activate_kms_signing_key: deny
+    mcp__vercel_add_project_domain: deny
+    mcp__vercel_add_route: deny
+    mcp__vercel_add_toolbar_reaction: deny
+    mcp__vercel_approve_rolling_release_stage: deny
+    mcp__vercel_assign_alias: deny
+    mcp__vercel_authorize_team_access: deny
+    mcp__vercel_authorize_team_sso: deny
+    mcp__vercel_buy_domain: deny
+    mcp__vercel_cancel_deployment: deny
+    mcp__vercel_change_toolbar_thread_resolve_status: deny
+    mcp__vercel_complete_rolling_release: deny
+    mcp__vercel_create_deployment: deny
+    mcp__vercel_create_drain: deny
+    mcp__vercel_create_edge_config: deny
+    mcp__vercel_create_edge_config_token: deny
+    mcp__vercel_create_flag: deny
+    mcp__vercel_create_git_project: deny
+    mcp__vercel_create_kms_issuer: deny
+    mcp__vercel_create_kms_issuer_policy: deny
+    mcp__vercel_create_kms_signing_key: deny
+    mcp__vercel_create_or_transfer_domain: deny
+    mcp__vercel_create_project: deny
+    mcp__vercel_create_project_env: deny
+    mcp__vercel_create_record: deny
+    mcp__vercel_create_sandboxes_sessions_by_session_id_snapshot_v2: deny
+    mcp__vercel_create_sandboxes_sessions_by_session_id_snapshot_v3: deny
+    mcp__vercel_create_sandboxes_v2: deny
+    mcp__vercel_create_sandboxes_v3: deny
+    mcp__vercel_create_sandboxes_v4: deny
+    mcp__vercel_create_sdk_key: deny
+    mcp__vercel_create_session_directory: deny
+    mcp__vercel_create_storage_stores_blob: deny
+    mcp__vercel_create_trace_session: deny
+    mcp__vercel_edit_project_env: deny
+    mcp__vercel_edit_route: deny
+    mcp__vercel_edit_toolbar_message: deny
+    mcp__vercel_extend_session_timeout: deny
+    mcp__vercel_get_access_to_vercel_url: deny
+    mcp__vercel_import_claude_design_from_url: deny
+    mcp__vercel_invalidate_by_src_images: deny
+    mcp__vercel_invalidate_by_tags: deny
+    mcp__vercel_issue_cert: deny
+    mcp__vercel_kill_session_command: deny
+    mcp__vercel_patch_edge_config_items: deny
+    mcp__vercel_patch_url_protection_bypass: deny
+    mcp__vercel_pause_project: deny
+    mcp__vercel_put_firewall_config: deny
+    mcp__vercel_record_events: deny
+    mcp__vercel_reply_to_toolbar_thread: deny
+    mcp__vercel_request_promote: deny
+    mcp__vercel_request_rollback: deny
+    mcp__vercel_rerequest_check: deny
+    mcp__vercel_restore_edge_config_backup: deny
+    mcp__vercel_restore_redirects: deny
+    mcp__vercel_retry_vercel_ci_invocation: deny
+    mcp__vercel_revoke_kms_signing_key: deny
+    mcp__vercel_run_session_command: deny
+    mcp__vercel_stage_redirects: deny
+    mcp__vercel_stage_routes: deny
+    mcp__vercel_start_rolling_release: deny
+    mcp__vercel_stop_session: deny
+    mcp__vercel_submit_feedback: deny
+    mcp__vercel_test_drain: deny
+    mcp__vercel_unpause_project: deny
+    mcp__vercel_update_attack_challenge_mode: deny
+    mcp__vercel_update_bulk_redirect_version: deny
+    mcp__vercel_update_connector: deny
+    mcp__vercel_update_drain: deny
+    mcp__vercel_update_edge_config: deny
+    mcp__vercel_update_firewall_config: deny
+    mcp__vercel_update_flag: deny
+    mcp__vercel_update_flag_segment: deny
+    mcp__vercel_update_flag_settings: deny
+    mcp__vercel_update_kms_issuer: deny
+    mcp__vercel_update_kms_issuer_policy: deny
+    mcp__vercel_update_project: deny
+    mcp__vercel_update_project_protection_bypass: deny
+    mcp__vercel_update_record: deny
+    mcp__vercel_update_rolling_release_config: deny
+    mcp__vercel_update_route_versions: deny
+    mcp__vercel_update_sandbox: deny
+    mcp__vercel_update_session_network_policy: deny
+    mcp__vercel_upload_artifact: deny
+    mcp__vercel_upload_file: deny
+    mcp__vercel_upsert_connector_project_connection: deny
+    mcp__vercel_verify_project_domain: deny
+    mcp__vercel_write_session_files: deny
+bash:
+  patterns:
+    - match: terraform state mv*
+      approval: deny
+    - match: "*terraform *state mv*"
+      approval: deny
+    - match: terraform state rm*
+      approval: deny
+    - match: "*terraform *state rm*"
+      approval: deny
+    - match: terraform state push*
+      approval: deny
+    - match: "*terraform *state push*"
+      approval: deny
+    - match: terraform state pull*
+      approval: deny
+    - match: "*terraform *state pull*"
+      approval: deny
+    - match: terraform state show*
+      approval: deny
+    - match: "*terraform *state show*"
+      approval: deny
+    - match: terraform state replace-provider*
+      approval: deny
+    - match: "*terraform *state replace-provider*"
+      approval: deny
+    - match: terraform state identities*
+      approval: deny
+    - match: "*terraform *state identities*"
+      approval: deny
+    - match: terraform import*
+      approval: deny
+    - match: "*terraform *import*"
+      approval: deny
+    - match: terraform force-unlock*
+      approval: deny
+    - match: "*terraform *force-unlock*"
+      approval: deny
+    - match: terraform taint*
+      approval: deny
+    - match: "*terraform *taint*"
+      approval: deny
+    - match: terraform untaint*
+      approval: deny
+    - match: "*terraform *untaint*"
+      approval: deny
+    - match: aws-vault exec *admin* *
+      approval: deny
+    - match: aws * --profile *admin*
+      approval: deny
+    - match: AWS_PROFILE=*admin* *
+      approval: deny
+    - match: git push --force*
+      approval: deny
+    - match: git push -f*
+      approval: deny
+    - match: terraform apply*
+      approval: prompt
+    - match: terraform destroy*
+      approval: prompt
+    - match: kubectl apply *
+      approval: prompt
+    - match: kubectl delete *
+      approval: prompt
+    - match: kubectl edit *
+      approval: prompt
+    - match: git push * main*
+      approval: prompt
+    - match: git push * master*
+      approval: prompt
+    - match: git push main*
+      approval: prompt
+    - match: git push master*
+      approval: prompt
+    - match: terraform state list*
+      approval: allow
+    - match: "* terraform state list*"
+      approval: allow
+    - match: python3
+      approval: allow
+    - match: python3 *
+      approval: allow
+    - match: xargs cat *
+      approval: allow
+    - match: helm
+      approval: allow
+    - match: helm *
+      approval: allow
+{% if agent_config.omp_disabled_providers %}
+disabledProviders:
+{% for p in agent_config.omp_disabled_providers %}
+  - {{ p }}
+{% endfor %}{% endif %}
+{% if agent_config.omp_enabled_models %}
+enabledModels:
+{% for m in agent_config.omp_enabled_models %}
+  - {{ m }}
+{% endfor %}{% endif %}
+hideThinkingBlock: true
+update:
+  auto: true

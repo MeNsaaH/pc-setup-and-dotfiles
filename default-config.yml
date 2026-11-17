@@ -31,6 +31,7 @@ homebrew_installed_packages:
   - bash
   - bat
   - bfg
+  - can1357/tap/omp
   - colima
   - colordiff
   - composer
@@ -137,6 +138,7 @@ homebrew_cask_apps:
   - pritunl
   - session-manager-plugin
   - slack
+  - swiftbar
   - todoist
   - visual-studio-code
 #  - virtualbox
@@ -326,3 +328,61 @@ gcloud_components:
 helm_plugins:
   - https://github.com/jkroepke/helm-secrets
   - https://github.com/helm-unittest/helm-unittest
+
+# Coding-agent settings, rendered into the omp, Claude Code, Codex and Hindsight
+# configs by tasks/agents.yml. Override any of it in system-specific-config.yml,
+# which git ignores, to keep machine-only values out of this repo.
+agent_config:
+  about: "Describe yourself here."
+  work_dir: "{{ ansible_env.HOME }}/Codes"
+  instructions_import: ""
+
+  # An empty base_url leaves the provider block out of the rendered file.
+  codex_provider:
+    name: "gateway"
+    base_url: ""
+    api_key_env: "AI_GATEWAY_API_KEY"
+    wire_api: "responses"
+  omp_provider:
+    name: "gateway"
+    base_url: ""
+    api_key_env: "AI_GATEWAY_API_KEY"
+    api: "anthropic-messages"
+
+  models:
+    claude: "sonnet"
+    codex: ""
+    omp_default: ""
+    omp_slow: ""
+    omp_small: ""
+    omp_vision: ""
+
+  codex_reasoning_effort: "high"
+
+  # Extra roots allowed for reads, and the marketplace/plugin pairs to install.
+  claude_permission_paths: []
+  claude_marketplaces: []
+  claude_plugins: []
+  codex_plugins: []
+  codex_mcp_disabled_tools: {}
+
+  # [{name, url}] for HTTP servers, [{name, command, args, env}] for stdio.
+  mcp_servers: []
+
+  omp_models: []
+  omp_extensions: []
+  omp_enabled_providers: []
+  omp_disabled_providers: []
+  omp_enabled_models: []
+  omp_mcp_servers: {}
+  omp_disabled_mcp_servers: []
+
+  hindsight:
+    api_url: "http://localhost:8888"
+    server_mode: "self-hosted"
+    llm_provider: "openai"
+    llm_base_url: ""
+    llm_model: ""
+    llm_reasoning_effort: "none"
+    worker_id: "hindsight-local"
+    path_to_bank: {}

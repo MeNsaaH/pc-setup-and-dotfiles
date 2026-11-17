@@ -1,0 +1,134 @@
+---
+- name: Ensure coding-agent config directories exist
+  file:
+    state: directory
+    path: "{{ item }}"
+    mode: "0700"
+  loop:
+    - "{{ ansible_env.HOME }}/.claude"
+    - "{{ ansible_env.HOME }}/.codex"
+    - "{{ ansible_env.HOME }}/.hindsight"
+    - "{{ ansible_env.HOME }}/.omp/agent"
+  tags: ["agents"]
+
+# Every agent config is rendered, so no file in the repo carries a home path,
+# a model name or an endpoint. Values come from agent_config in
+# default-config.yml and its machine override, system-specific-config.yml.
+- name: Render agent configs
+  template:
+    src: "agents/{{ item.src }}"
+    dest: "{{ ansible_env.HOME }}/{{ item.dest }}"
+    mode: "0600"
+  loop:
+    - { src: claude-CLAUDE.md.j2, dest: .claude/CLAUDE.md }
+    - { src: claude-settings.json.j2, dest: .claude/settings.json }
+    - { src: codex-AGENTS.md.j2, dest: .codex/AGENTS.md }
+    - { src: codex-config.toml.j2, dest: .codex/config.toml }
+    - { src: codex-hooks.json.j2, dest: .codex/hooks.json }
+    - { src: omp-config.yml.j2, dest: .omp/agent/config.yml }
+    - { src: omp-models.yml.j2, dest: .omp/agent/models.yml }
+    - { src: omp-mcp.json.j2, dest: .omp/agent/mcp.json }
+    - { src: hindsight-claude-code.json.j2, dest: .hindsight/claude-code.json }
+    - { src: hindsight-coding-agent.json.j2, dest: .hindsight/coding-agent.json }
+  loop_control:
+    label: "{{ item.dest }}"
+  tags: ["agents"]
+
+# The model key in this file stays local: write it only when it is missing, so a
+# playbook run never overwrites a key someone filled in.
+- name: Seed the Hindsight environment file
+  template:
+    src: agents/hindsight.env.j2
+    dest: "{{ ansible_env.HOME }}/.hindsight/hindsight.env"
+    mode: "0600"
+    force: false
+  tags: ["agents"]
+
+# MCP servers and plugins go through each tool's own CLI, so the tool records
+# them in its own store and keeps them current through its normal update path.
+- name: List Claude Code MCP servers
+  command: claude mcp list
+  register: claude_mcp_list
+  changed_when: false
+  failed_when: false
+  tags: ["agents", "agent-mcp"]
+
+- name: Add HTTP MCP servers to Claude Code
+  command: claude mcp add --scope user --transport http {{ item.name }} {{ item.url }}
+  loop: "{{ agent_config.mcp_servers }}"
+  when:
+    - item.url is defined
+    - item.name not in claude_mcp_list.stdout
+  tags: ["agents", "agent-mcp"]
+
+- name: Add stdio MCP servers to Claude Code
+  command: >-
+    claude mcp add --scope user {{ item.name }}
+    {% for key, value in (item.env | default({})).items() %}-e {{ key }}={{ value }} {% endfor %}
+    -- {{ item.command }} {{ (item.args | default([])) | join(' ') }}
+  loop: "{{ agent_config.mcp_servers }}"
+  when:
+    - item.command is defined
+    - item.name not in claude_mcp_list.stdout
+  tags: ["agents", "agent-mcp"]
+
+- name: List Codex MCP servers
+  command: codex mcp list
+  register: codex_mcp_list
+  changed_when: false
+  failed_when: false
+  tags: ["agents", "agent-mcp"]
+
+- name: Add HTTP MCP servers to Codex
+  command: codex mcp add {{ item.name }} --url {{ item.url }}
+  loop: "{{ agent_config.mcp_servers }}"
+  when:
+    - item.url is defined
+    - item.name not in codex_mcp_list.stdout
+  tags: ["agents", "agent-mcp"]
+
+- name: Add stdio MCP servers to Codex
+  command: >-
+    codex mcp add {{ item.name }}
+    {% for key, value in (item.env | default({})).items() %}--env {{ key }}={{ value }} {% endfor %}
+    -- {{ item.command }} {{ (item.args | default([])) | join(' ') }}
+  loop: "{{ agent_config.mcp_servers }}"
+  when:
+    - item.command is defined
+    - item.name not in codex_mcp_list.stdout
+  tags: ["agents", "agent-mcp"]
+
+- name: List Claude Code plugins and marketplaces
+  command: "{{ item }}"
+  loop:
+    - claude plugin list
+    - claude plugin marketplace list
+  register: claude_plugin_lists
+  changed_when: false
+  failed_when: false
+  tags: ["agents", "agent-plugins"]
+
+- name: Add Claude Code plugin marketplaces
+  command: claude plugin marketplace add {{ item }}
+  loop: "{{ agent_config.claude_marketplaces }}"
+  when: item not in (claude_plugin_lists.results[1].stdout | default(''))
+  tags: ["agents", "agent-plugins"]
+
+- name: Install Claude Code plugins
+  command: claude plugin install --scope user {{ item }}
+  loop: "{{ agent_config.claude_plugins }}"
+  when: item.split('@')[0] not in (claude_plugin_lists.results[0].stdout | default(''))
+  tags: ["agents", "agent-plugins"]
+
+- name: List Codex plugins
+  command: codex plugin list
+  register: codex_plugin_list
+  changed_when: false
+  failed_when: false
+  tags: ["agents", "agent-plugins"]
+
+- name: Install Codex plugins
+  command: codex plugin add {{ item }}
+  loop: "{{ agent_config.codex_plugins }}"
+  when: item.split('@')[0] not in (codex_plugin_list.stdout | default(''))
+  tags: ["agents", "agent-plugins"]

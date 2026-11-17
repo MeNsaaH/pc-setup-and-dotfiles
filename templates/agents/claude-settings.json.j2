@@ -1,0 +1,277 @@
+{
+  "permissions": {
+    "allow": [
+{% for p in agent_config.claude_permission_paths %}
+      "Read(/{{ p }}/**)",
+{% endfor %}
+      "Bash(python3:*)",
+      "Bash(xargs cat:*)",
+      "Bash(helm:*)",
+      "Bash(terraform state list*)",
+      "Bash(* terraform state list*)"
+    ],
+    "deny": [
+      "mcp__plugin_slack_slack__slack_send_message",
+      "mcp__plugin_slack_slack__slack_schedule_message",
+      "mcp__plugin_slack_slack__slack_add_reaction",
+      "mcp__plugin_slack_slack__slack_create_canvas",
+      "mcp__plugin_slack_slack__slack_update_canvas",
+      "Bash(aws-vault exec *admin* *)",
+      "Bash(aws * --profile *admin*)",
+      "Bash(AWS_PROFILE=*admin* *)",
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "mcp__slack__slack_send_message",
+      "mcp__slack__slack_send_message_draft",
+      "mcp__slack__slack_schedule_message",
+      "mcp__slack__slack_create_canvas",
+      "mcp__slack__slack_update_canvas",
+      "mcp__slack__slack_add_reaction",
+      "mcp__vercel__accept_project_transfer_request",
+      "mcp__vercel__activate_kms_signing_key",
+      "mcp__vercel__add_project_domain",
+      "mcp__vercel__add_route",
+      "mcp__vercel__add_toolbar_reaction",
+      "mcp__vercel__approve_rolling_release_stage",
+      "mcp__vercel__assign_alias",
+      "mcp__vercel__authorize_team_access",
+      "mcp__vercel__authorize_team_sso",
+      "mcp__vercel__buy_domain",
+      "mcp__vercel__cancel_deployment",
+      "mcp__vercel__change_toolbar_thread_resolve_status",
+      "mcp__vercel__complete_rolling_release",
+      "mcp__vercel__create_deployment",
+      "mcp__vercel__create_drain",
+      "mcp__vercel__create_edge_config",
+      "mcp__vercel__create_edge_config_token",
+      "mcp__vercel__create_flag",
+      "mcp__vercel__create_git_project",
+      "mcp__vercel__create_kms_issuer",
+      "mcp__vercel__create_kms_issuer_policy",
+      "mcp__vercel__create_kms_signing_key",
+      "mcp__vercel__create_or_transfer_domain",
+      "mcp__vercel__create_project",
+      "mcp__vercel__create_project_env",
+      "mcp__vercel__create_record",
+      "mcp__vercel__create_sandboxes_sessions_by_session_id_snapshot_v2",
+      "mcp__vercel__create_sandboxes_sessions_by_session_id_snapshot_v3",
+      "mcp__vercel__create_sandboxes_v2",
+      "mcp__vercel__create_sandboxes_v3",
+      "mcp__vercel__create_sandboxes_v4",
+      "mcp__vercel__create_sdk_key",
+      "mcp__vercel__create_session_directory",
+      "mcp__vercel__create_storage_stores_blob",
+      "mcp__vercel__create_trace_session",
+      "mcp__vercel__edit_project_env",
+      "mcp__vercel__edit_route",
+      "mcp__vercel__edit_toolbar_message",
+      "mcp__vercel__extend_session_timeout",
+      "mcp__vercel__get_access_to_vercel_url",
+      "mcp__vercel__import-claude-design-from-url",
+      "mcp__vercel__invalidate_by_src_images",
+      "mcp__vercel__invalidate_by_tags",
+      "mcp__vercel__issue_cert",
+      "mcp__vercel__kill_session_command",
+      "mcp__vercel__patch_edge_config_items",
+      "mcp__vercel__patch_url_protection_bypass",
+      "mcp__vercel__pause_project",
+      "mcp__vercel__put_firewall_config",
+      "mcp__vercel__record_events",
+      "mcp__vercel__reply_to_toolbar_thread",
+      "mcp__vercel__request_promote",
+      "mcp__vercel__request_rollback",
+      "mcp__vercel__rerequest_check",
+      "mcp__vercel__restore_edge_config_backup",
+      "mcp__vercel__restore_redirects",
+      "mcp__vercel__retry_vercel_ci_invocation",
+      "mcp__vercel__revoke_kms_signing_key",
+      "mcp__vercel__run_session_command",
+      "mcp__vercel__stage_redirects",
+      "mcp__vercel__stage_routes",
+      "mcp__vercel__start_rolling_release",
+      "mcp__vercel__stop_session",
+      "mcp__vercel__submit_feedback",
+      "mcp__vercel__test_drain",
+      "mcp__vercel__unpause_project",
+      "mcp__vercel__update_attack_challenge_mode",
+      "mcp__vercel__update_bulk_redirect_version",
+      "mcp__vercel__update_connector",
+      "mcp__vercel__update_drain",
+      "mcp__vercel__update_edge_config",
+      "mcp__vercel__update_firewall_config",
+      "mcp__vercel__update_flag",
+      "mcp__vercel__update_flag_segment",
+      "mcp__vercel__update_flag_settings",
+      "mcp__vercel__update_kms_issuer",
+      "mcp__vercel__update_kms_issuer_policy",
+      "mcp__vercel__update_project",
+      "mcp__vercel__update_project_protection_bypass",
+      "mcp__vercel__update_record",
+      "mcp__vercel__update_rolling_release_config",
+      "mcp__vercel__update_route_versions",
+      "mcp__vercel__update_sandbox",
+      "mcp__vercel__update_session_network_policy",
+      "mcp__vercel__upload_artifact",
+      "mcp__vercel__upload_file",
+      "mcp__vercel__upsert_connector_project_connection",
+      "mcp__vercel__verify_project_domain",
+      "mcp__vercel__write_session_files",
+      "Bash(terraform state mv*)",
+      "Bash(*terraform *state mv*)",
+      "Bash(terraform state rm*)",
+      "Bash(*terraform *state rm*)",
+      "Bash(terraform state push*)",
+      "Bash(*terraform *state push*)",
+      "Bash(terraform state pull*)",
+      "Bash(*terraform *state pull*)",
+      "Bash(terraform state show*)",
+      "Bash(*terraform *state show*)",
+      "Bash(terraform state replace-provider*)",
+      "Bash(*terraform *state replace-provider*)",
+      "Bash(terraform state identities*)",
+      "Bash(*terraform *state identities*)",
+      "Bash(terraform import*)",
+      "Bash(*terraform *import*)",
+      "Bash(terraform force-unlock*)",
+      "Bash(*terraform *force-unlock*)",
+      "Bash(terraform taint*)",
+      "Bash(*terraform *taint*)",
+      "Bash(terraform untaint*)",
+      "Bash(*terraform *untaint*)"
+    ]
+  },
+  "model": "{{ agent_config.models.claude }}",
+  "theme": "dark",
+  "voice": {"mode": "hold", "autoSubmit": true},
+  "voiceEnabled": true,
+  "skipDangerousModePermissionPrompt": true,
+  "hooks": {
+  "Notification": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "{{ ansible_env.HOME }}/.config/iterm2/cc-status"
+        }
+      ]
+    }
+  ],
+  "PermissionRequest": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "{{ ansible_env.HOME }}/.config/iterm2/cc-status"
+        }
+      ]
+    }
+  ],
+  "PostToolUse": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "{{ ansible_env.HOME }}/.config/iterm2/cc-status"
+        }
+      ]
+    }
+  ],
+  "PreToolUse": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "{{ ansible_env.HOME }}/.config/iterm2/cc-status"
+        }
+      ]
+    }
+  ],
+  "SessionEnd": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "{{ ansible_env.HOME }}/.config/iterm2/cc-status"
+        }
+      ]
+    }
+  ],
+  "SessionStart": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "{{ ansible_env.HOME }}/.config/iterm2/cc-status"
+        }
+      ]
+    },
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "node \"{{ ansible_env.HOME }}/.hindsight/coding-agents/dist/claude-sessionstart-hook.js\"",
+          "timeout": 30
+        }
+      ]
+    }
+  ],
+  "Stop": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "{{ ansible_env.HOME }}/.config/iterm2/cc-status"
+        }
+      ]
+    },
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "node \"{{ ansible_env.HOME }}/.hindsight/coding-agents/dist/claude-stop-hook.js\"",
+          "timeout": 60
+        }
+      ]
+    }
+  ],
+  "StopFailure": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "{{ ansible_env.HOME }}/.config/iterm2/cc-status"
+        }
+      ]
+    }
+  ],
+  "SubagentStop": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "{{ ansible_env.HOME }}/.config/iterm2/cc-status"
+        }
+      ]
+    }
+  ],
+  "UserPromptSubmit": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "{{ ansible_env.HOME }}/.config/iterm2/cc-status"
+        }
+      ]
+    },
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "node \"{{ ansible_env.HOME }}/.hindsight/coding-agents/dist/claude-hook.js\"",
+          "timeout": 30
+        }
+      ]
+    }
+  ]
+}
+}

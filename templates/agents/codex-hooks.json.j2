@@ -1,0 +1,46 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{ ansible_env.HOME }}/.local/bin/plannotator",
+            "timeout": 345600
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"{{ ansible_env.HOME }}/.hindsight/coding-agents/dist/codex-stop-hook.js\"",
+            "timeout": 60
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"{{ ansible_env.HOME }}/.hindsight/coding-agents/dist/codex-sessionstart-hook.js\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"{{ ansible_env.HOME }}/.hindsight/coding-agents/dist/codex-hook.js\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

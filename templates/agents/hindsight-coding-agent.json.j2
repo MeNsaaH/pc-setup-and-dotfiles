@@ -1,0 +1,13 @@
+{
+  "serverMode": "{{ agent_config.hindsight.server_mode | default('self-hosted') }}",
+  "apiUrl": "{{ agent_config.hindsight.api_url | default('http://localhost:8888') }}",
+  "autoInject": "pages",
+  "recallOptions": {
+    "budget": "mid"
+  },
+  "mapPathToBank": {
+{% for path, bank in (agent_config.hindsight.path_to_bank | default({})).items() %}
+    "{{ path }}": "{{ bank }}"{% if not loop.last %},{% endif %}
+{% endfor %}
+  }
+}

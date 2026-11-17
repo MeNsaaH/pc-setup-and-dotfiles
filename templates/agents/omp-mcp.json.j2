@@ -1,0 +1,4 @@
+{
+	"mcpServers": {{ agent_config.omp_mcp_servers | default({}) | to_nice_json }},
+	"disabledServers": {{ agent_config.omp_disabled_mcp_servers | default([]) | to_nice_json }}
+}

@@ -1,0 +1,9 @@
+{
+  "hindsightApiUrl": "{{ agent_config.hindsight.api_url | default('http://localhost:8888') }}",
+  "dynamicBankId": true,
+  "dynamicBankGranularity": ["agent", "project"],
+  "agentName": "claude-code",
+  "autoRecall": true,
+  "autoRetain": true,
+  "recallBudget": "mid"
+}

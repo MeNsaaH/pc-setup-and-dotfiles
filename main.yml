@@ -4,6 +4,8 @@
   vars_files:
     - vars/{{ ansible_distribution }}.yml
     - default-config.yml
+    # Machine-only values: paths, endpoints, model names, tokens' item names.
+    - { file: system-specific-config.yml, optional: true }
 
   roles:
     - role: elliotweiser.osx-command-line-tools
@@ -93,6 +95,9 @@
       args:
         apply:
           tags: ["dotfiles", "zsh", "vim"]
+
+    - import_tasks: tasks/agents.yml
+      tags: ["agents"]
 
     - name: Setup ZSH and ohmyzsh
       import_tasks: tasks/zsh.yml

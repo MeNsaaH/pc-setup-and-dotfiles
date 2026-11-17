@@ -1,0 +1,43 @@
+# Codex config. Rendered by the dotfiles playbook; see README.md.
+{% if agent_config.models.codex %}
+model = "{{ agent_config.models.codex }}"
+{% endif %}
+model_reasoning_effort = "{{ agent_config.codex_reasoning_effort | default('high') }}"
+
+{% if agent_config.codex_provider.base_url %}
+[model_providers.{{ agent_config.codex_provider.name }}]
+name = "{{ agent_config.codex_provider.name }}"
+base_url = "{{ agent_config.codex_provider.base_url }}"
+env_key = "{{ agent_config.codex_provider.api_key_env }}"
+wire_api = "{{ agent_config.codex_provider.wire_api }}"
+stream_idle_timeout_ms = 7200000
+stream_max_retries = 5
+request_max_retries = 4
+
+{% endif %}
+{% if agent_config.work_dir %}
+[projects."{{ agent_config.work_dir }}"]
+trust_level = "trusted"
+
+{% endif %}
+[notice.model_migrations]
+"gpt-5.3-codex" = "gpt-5.4"
+"gpt-5.4" = "gpt-5.5"
+
+[tui]
+screen_reader_detection_done = true
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
+"gpt-5.6-sol" = 4
+"gpt-6.1-sol" = 2
+
+[features]
+hooks = true
+
+{% for name, tools in (agent_config.codex_mcp_disabled_tools | default({})).items() %}
+[mcp_servers.{{ name }}]
+disabled_tools = [
+{% for t in tools %}  "{{ t }}",
+{% endfor %}]
+{% endfor %}
