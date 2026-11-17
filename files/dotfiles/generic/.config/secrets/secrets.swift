@@ -138,6 +138,8 @@ enum Keychain {
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: ref,
             kSecAttrAccount as String: keychainAccount,
+            // The file-based login keychain, so no query raises a UI prompt.
+            kSecUseDataProtectionKeychain as String: false,
         ]
     }
 
@@ -217,16 +219,9 @@ enum Keychain {
     }
 
     static func deleteAll() throws -> Int {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: keychainAccount,
-        ]
-        let matches = try list()
-        let status = SecItemDelete(query as CFDictionary)
-        guard status == errSecSuccess || status == errSecItemNotFound else {
-            throw Failure(description: "keychain delete failed (OSStatus \(status))")
-        }
-        return matches.count
+        let entries = try list()
+        for entry in entries { try delete(entry.ref) }
+        return entries.count
     }
 }
 
@@ -362,13 +357,16 @@ func commandRead(_ arguments: [String]) throws {
     let cached = try? Keychain.load(reference)
 
     if !refresh, let cached, !cached.metadata.isExpired {
-        if ttl != cached.metadata.ttl { try? Keychain.touch(reference, ttl: ttl) }
-        let value = try Enclave.open(cached.ciphertext, with: try Enclave.loadOrCreateKey())
-        guard let text = String(data: value, encoding: .utf8) else {
-            fail("cached value for \(reference) is not UTF-8")
+        if let key = try? Enclave.loadOrCreateKey(),
+           let data = try? Enclave.open(cached.ciphertext, with: key),
+           let text = String(data: data, encoding: .utf8) {
+            if ttl != cached.metadata.ttl { try? Keychain.touch(reference, ttl: ttl) }
+            print(text, terminator: "")
+            return
         }
-        print(text, terminator: "")
-        return
+        // The key no longer matches the entry, e.g. key.dat was recreated or
+        // restored from another machine. Drop it and fetch again.
+        try? Keychain.delete(reference)
     }
 
     let value = fetch(reference)
